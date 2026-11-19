@@ -738,7 +738,7 @@
         const POPMINUTES_APP_BASE_URL = 'https://hoangtrucnhi.github.io/PopMinutes-Game/';
 
         // Dán URL Google Apps Script /exec vào đây để tự động đẩy bài lên mọi thiết bị
-        const DEFAULT_CLOUD_SYNC_URL = '';
+        const DEFAULT_CLOUD_SYNC_URL = 'https://script.google.com/macros/s/AKfycbx2GgGfkpCzgS40yZ2Xrip2NtPwujYx9cwE-t2ci3rpbBLac-uepqbXMEe24pGBASZ0yA/exec';
 
         const PARTNER_HISTORY_KEY = 'popminutes_partner_zip_games_v1';
         const LEARNER_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
@@ -949,17 +949,28 @@
                 }
             },
 
-            persistHistory() {
+            async persistHistory() {
                 try {
+                    this.history.forEach((item, idx) => {
+                        if (!item.id) item.id = `zip_${Date.now()}_${idx}`;
+                        if (item.level) {
+                            item.level.id = item.id;
+                            item.level.levelNum = Number(item.levelNum || item.level.levelNum) || 1;
+                            item.level.partnerName = item.partnerName || item.level.partnerName || 'Chuyên gia';
+                            item.level.rawTitle = item.title || item.level.rawTitle || 'Quy trình thực chiến';
+                        }
+                    });
                     localStorage.setItem(PARTNER_HISTORY_KEY, JSON.stringify(this.history));
                     const learnerLevels = this.history.map(item => item.level);
                     localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
-                    if (DEFAULT_CLOUD_SYNC_URL) {
-                        fetch(DEFAULT_CLOUD_SYNC_URL, {
+
+                    const cloudUrl = getActiveCloudUrl();
+                    if (cloudUrl) {
+                        await fetch(cloudUrl, {
                             method: 'POST',
                             mode: 'no-cors',
                             body: JSON.stringify(learnerLevels)
-                        }).catch(() => {});
+                        });
                     }
                 } catch (e) {}
             },
