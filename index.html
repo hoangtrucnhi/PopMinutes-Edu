@@ -958,23 +958,26 @@
                             item.level.levelNum = Number(item.levelNum || item.level.levelNum) || 1;
                             item.level.partnerName = item.partnerName || item.level.partnerName || 'Chuyên gia';
                             item.level.rawTitle = item.title || item.level.rawTitle || 'Quy trình thực chiến';
+                            item.level.name = `${item.level.rawTitle} · ${item.level.partnerName}`;
                         }
                     });
                     localStorage.setItem(PARTNER_HISTORY_KEY, JSON.stringify(this.history));
                     const learnerLevels = this.history.map(item => item.level);
                     localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
 
-                    const cloudUrl = getActiveCloudUrl();
+                    const cloudUrl = (DEFAULT_CLOUD_SYNC_URL || '').trim();
                     if (cloudUrl) {
                         await fetch(cloudUrl, {
                             method: 'POST',
                             mode: 'no-cors',
                             body: JSON.stringify(learnerLevels)
                         });
+                        showToast(`Đã đồng bộ ${learnerLevels.length} màn lên App Sales!`);
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.error('Lỗi đồng bộ Cloud:', e);
+                }
             },
-
             startNewGame(silent) {
                 this.editingId = null;
                 document.getElementById('editingStatusBadge').style.display = 'none';
@@ -1338,7 +1341,7 @@
                 const walls = candidateWalls.slice(0, autoCfg.wallTarget);
 
                 this.currentLevel = {
-                    id: '',
+                    id: this.editingId || ('zip_' + Date.now()),
                     levelNum,
                     name: '',
                     rawTitle: '',
