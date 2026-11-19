@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PopMinutes Studio · Tạo Game Đào Tạo Quy Trình (Zip)</title>
+    <title>PopMinutes Studio · Quản Lý Game Đào Tạo Đối Tác</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
+            --brand: #4D3B9C;
+            --brand-dark: #362773;
+            --brand-pale: #F5F3FF;
             --navy: #1B2B7A;
-            --navy-dark: #111C54;
-            --blue: #2563EB;
-            --bg: #F1F5F9;
+            --bg: #F4F5F8;
             --white: #FFFFFF;
             --text: #0F172A;
             --muted: #64748B;
             --border: #E2E8F0;
-            --shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            --shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -26,16 +27,16 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding-bottom: 40px;
+            padding-bottom: 48px;
         }
         .topbar {
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
             color: #FFFFFF;
-            padding: 16px 24px;
+            padding: 15px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 16px rgba(17, 28, 84, 0.16);
+            box-shadow: 0 4px 16px rgba(54, 39, 115, 0.18);
         }
         .brand {
             display: flex;
@@ -46,48 +47,39 @@
             width: 38px;
             height: 38px;
             border-radius: 11px;
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.16);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
         }
-        .brand h1 {
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-        }
-        .brand p {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.78);
-        }
+        .brand h1 { font-size: 16px; font-weight: 800; }
+        .brand p { font-size: 12px; color: rgba(255, 255, 255, 0.82); }
         .open-app-link {
             display: inline-flex;
             align-items: center;
             gap: 7px;
             padding: 9px 14px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.16);
             color: #FFFFFF;
             text-decoration: none;
             font-size: 13px;
             font-weight: 700;
             transition: background 0.15s ease;
         }
-        .open-app-link:hover {
-            background: rgba(255, 255, 255, 0.24);
-        }
+        .open-app-link:hover { background: rgba(255, 255, 255, 0.25); }
 
         .container {
-            max-width: 1120px;
-            margin: 24px auto 0;
+            max-width: 1180px;
+            margin: 22px auto 0;
             padding: 0 18px;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 22px;
+            grid-template-columns: 1.18fr 0.82fr;
+            gap: 20px;
             align-items: start;
         }
-        @media (max-width: 880px) {
+        @media (max-width: 920px) {
             .container { grid-template-columns: 1fr; }
         }
 
@@ -95,26 +87,36 @@
             background: var(--white);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 22px;
+            padding: 20px;
             box-shadow: var(--shadow);
+            margin-bottom: 18px;
         }
         .card-title {
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 16px;
+            color: var(--brand);
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
         }
-        .field { margin-bottom: 14px; }
+        .editing-pill {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FDE68A;
+        }
+        .field { margin-bottom: 13px; }
         .field label {
             display: block;
             font-size: 12.5px;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .input, .select {
             width: 100%;
@@ -128,12 +130,15 @@
             outline: none;
             transition: border-color 0.15s ease;
         }
-        .input:focus, .select:focus { border-color: var(--blue); }
+        .input:focus, .select:focus { border-color: var(--brand); }
 
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+        }
+        @media (max-width: 560px) {
+            .grid-2 { grid-template-columns: 1fr; }
         }
 
         /* Danh sách từng bước SOP */
@@ -145,7 +150,7 @@
         }
         .step-row {
             display: grid;
-            grid-template-columns: 28px 135px 1fr 32px;
+            grid-template-columns: 28px 130px 1fr 30px;
             gap: 8px;
             align-items: center;
             background: #F8FAFC;
@@ -153,14 +158,11 @@
             border-radius: 12px;
             padding: 7px 8px;
         }
-        @media (max-width: 520px) {
-            .step-row { grid-template-columns: 24px 105px 1fr 28px; gap: 6px; }
-        }
         .step-num {
             width: 24px;
             height: 24px;
-            border-radius: 50%;
-            background: var(--navy);
+            border-radius: 7px;
+            background: var(--brand);
             color: #FFFFFF;
             font-size: 11.5px;
             font-weight: 800;
@@ -178,58 +180,123 @@
             background: #FFFFFF;
             outline: none;
         }
-        .step-row input:focus { border-color: var(--blue); }
+        .step-row input:focus { border-color: var(--brand); }
         .step-del {
             border: none;
             background: transparent;
             color: #94A3B8;
             cursor: pointer;
             font-size: 14px;
-            padding: 4px;
         }
         .step-del:hover { color: #DC2626; }
+
+        /* Hộp cấu hình Video */
+        .video-attach-box {
+            background: #FAF9FE;
+            border: 1.5px dashed #C4B5FD;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 7px;
-            padding: 11px 16px;
-            border-radius: 12px;
+            padding: 10px 15px;
+            border-radius: 11px;
             border: 1.5px solid var(--border);
             background: #FFFFFF;
             color: var(--text);
             font-family: inherit;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
         }
-        .btn:hover { border-color: var(--navy); color: var(--navy); }
+        .btn:hover { border-color: var(--brand); color: var(--brand); }
         .btn-primary {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-            border-color: transparent;
+            background: var(--brand);
+            border-color: var(--brand);
             color: #FFFFFF;
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.24);
         }
         .btn-primary:hover {
+            background: var(--brand-dark);
             color: #FFFFFF;
-            transform: translateY(-1px);
         }
-        .btn-sm { padding: 7px 11px; font-size: 12px; border-radius: 9px; }
+        .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 9px; }
 
-        /* Khu vực Preview Bàn Cờ */
+        /* Lịch sử Game Đối tác */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 430px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+        .history-item {
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            background: #FFFFFF;
+            transition: border-color 0.15s ease;
+        }
+        .history-item.active-edit {
+            border-color: var(--brand);
+            background: var(--brand-pale);
+        }
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .history-partner {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--brand);
+            background: #F3E8FF;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+        .history-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .history-meta {
+            font-size: 11.5px;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .history-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* Bàn cờ Preview đồng bộ 100% giao diện học viên */
         .preview-toolbar {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 7px;
             margin-bottom: 12px;
         }
         .toggle-pill {
             padding: 6px 11px;
             border-radius: 9px;
             border: 1.5px solid var(--border);
-            background: #F8FAFC;
+            background: #FFFFFF;
             font-family: inherit;
             font-size: 12px;
             font-weight: 700;
@@ -237,17 +304,17 @@
             cursor: pointer;
         }
         .toggle-pill.active {
-            background: var(--navy);
-            border-color: var(--navy);
+            background: var(--brand);
+            border-color: var(--brand);
             color: #FFFFFF;
         }
         .step-banner {
-            background: #EFF6FF;
-            border: 1px solid #DBEAFE;
+            background: var(--brand-pale);
+            border: 1px solid #DDD6FE;
             border-radius: 11px;
             padding: 9px 12px;
             font-size: 12.5px;
-            color: var(--navy);
+            color: #3B2D7A;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
@@ -258,11 +325,10 @@
             max-width: 380px;
             aspect-ratio: 1 / 1;
             margin: 0 auto 14px;
-            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+            background: #FFFFFF;
             border-radius: 24px;
             padding: 12px;
             border: 1.5px solid #E2E8F0;
-            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
             user-select: none;
             touch-action: none;
         }
@@ -272,8 +338,8 @@
             height: 100%;
             border-radius: 16px;
             overflow: hidden;
-            background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
+            background: #FAF9FE;
+            border: 1px solid #E2E8F0;
         }
         .zip-grid {
             display: grid;
@@ -282,8 +348,8 @@
         }
         .zip-cell {
             position: relative;
-            border-right: 1px solid #EEF2F6;
-            border-bottom: 1px solid #EEF2F6;
+            border-right: 1px solid rgba(203, 213, 225, 0.45);
+            border-bottom: 1px solid rgba(203, 213, 225, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -309,70 +375,101 @@
             position: relative;
             z-index: 4;
             width: 84%;
-            min-height: 54%;
+            min-height: 56%;
             padding: 4px 5px;
-            border-radius: 12px;
-            background: #FFFFFF;
-            border: 1.8px solid #94A3B8;
-            color: #0F172A;
-            font-size: 10.5px;
-            font-weight: 800;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1.5px solid #CBD5E1;
+            color: #1E293B;
+            font-size: 10px;
+            font-weight: 700;
             line-height: 1.15;
             text-align: center;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 1px;
             word-break: break-word;
-            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
             pointer-events: none;
             transition: all 0.15s ease;
         }
         .zip-node-step.is-start {
-            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-            border-color: #2563EB;
-            color: #1E3A8A;
+            background: #F3E8FF;
+            border-color: #4D3B9C;
+            color: #4D3B9C;
         }
         .zip-node-step.is-end {
             border-style: dashed;
-            border-color: #0D9488;
+            border-color: #7C3AED;
         }
         .zip-cell.visited .zip-node-step {
-            background: linear-gradient(135deg, #1B2B7A 0%, #2563EB 100%);
+            background: #4D3B9C;
             border-style: solid;
-            border-color: #1B2B7A;
+            border-color: rgba(255, 255, 255, 0.85);
             color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
         }
-        .zip-step-badge {
-            position: absolute;
-            top: -6px;
-            left: -5px;
-            min-width: 16px;
-            height: 16px;
-            padding: 0 4px;
-            border-radius: 8px;
-            background: #2563EB;
-            border: 1.5px solid #FFFFFF;
-            color: #FFFFFF;
-            font-size: 9px;
+        .zip-step-num {
+            display: inline-block;
+            font-size: 8.5px;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            line-height: 1;
+            padding: 1.5px 5px;
+            border-radius: 5px;
+            background: #F1F5F9;
+            color: #64748B;
         }
-        .zip-cell.visited .zip-step-badge { background: #10B981; }
+        .zip-node-step.is-start .zip-step-num {
+            background: rgba(77, 59, 156, 0.14);
+            color: #4D3B9C;
+        }
+        .zip-cell.visited .zip-step-num {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+        }
 
-        /* Hộp xuất bản gửi học viên */
-        .publish-box {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
         .share-url-row {
             display: flex;
             gap: 8px;
             margin-top: 8px;
         }
+
+        /* Popup xem thử Video */
+        .video-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 9999;
+        }
+        .video-modal-backdrop.open { display: flex; }
+        .video-modal-box {
+            width: 100%;
+            max-width: 480px;
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.25);
+        }
+        .video-frame-wrap {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0F172A;
+            margin: 12px 0;
+        }
+        .video-frame-wrap iframe,
+        .video-frame-wrap video {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         .toast {
             position: fixed;
             bottom: 24px;
@@ -387,7 +484,7 @@
             opacity: 0;
             pointer-events: none;
             transition: all 0.2s ease;
-            z-index: 999;
+            z-index: 10000;
         }
         .toast.show {
             opacity: 1;
@@ -401,8 +498,8 @@
         <div class="brand">
             <div class="brand-badge"><i class="fa-solid fa-graduation-cap"></i></div>
             <div>
-                <h1>PopMinutes · Studio Đào Tạo</h1>
-                <p>Trang soạn & xuất bản bài thực hành quy trình (Zip)</p>
+                <h1>PopMinutes · Studio Quản Lý Đào Tạo</h1>
+                <p>Soạn quy trình, đính kèm video bài học & quản lý thư viện game đối tác</p>
             </div>
         </div>
         <a href="index.html#game-zip" target="_blank" class="open-app-link">
@@ -411,131 +508,181 @@
     </header>
 
     <main class="container">
-        <!-- CỘT TRÁI: TRÌNH SOẠN QUY TRÌNH -->
-        <section class="card">
-            <div class="card-title">
-                <span><i class="fa-solid fa-sliders"></i> 1. Cấu hình Quy trình Đào tạo</span>
-                <button type="button" class="btn btn-sm" onclick="AdminStudio.loadSamplePreset()">
-                    <i class="fa-solid fa-rotate"></i> Nạp mẫu Sales B2B
-                </button>
-            </div>
-
-            <div class="field">
-                <label>Tên bài đào tạo / Quy trình</label>
-                <input type="text" id="levelTitle" class="input" value="Quy trình Chốt Sales B2B" oninput="AdminStudio.updateShareLink()">
-            </div>
-
-            <div class="grid-2 field">
-                <div>
-                    <label>Kích thước bàn cờ</label>
-                    <select id="gridSize" class="select" onchange="AdminStudio.generateBoard()">
-                        <option value="5" selected>5×5 (25 ô · Tiêu chuẩn)</option>
-                        <option value="6">6×6 (36 ô · Chuyên sâu)</option>
-                        <option value="7">7×7 (49 ô · Nâng cao)</option>
-                    </select>
+        <!-- CỘT TRÁI: TRÌNH SOẠN & LỊCH SỬ GAME ĐỐI TÁC -->
+        <div>
+            <section class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-sliders"></i> Thiết lập Game Quy trình</span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <span id="editingStatusBadge" class="editing-pill" style="display:none;">Đang sửa bản đã lưu</span>
+                        <button type="button" class="btn btn-sm" onclick="AdminStudio.startNewGame()">
+                            <i class="fa-solid fa-file-circle-plus"></i> Tạo mới
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <label>Độ khó vách ngăn</label>
-                    <select id="wallDiff" class="select" onchange="AdminStudio.generateBoard()">
-                        <option value="easy">Dễ (Ít vách ngăn)</option>
-                        <option value="medium" selected>Vừa (Tiêu chuẩn)</option>
-                        <option value="hard">Khó (Nhiều vách ngăn)</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="field">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <label style="margin:0;">Các bước quy trình theo đúng thứ tự (3 – 12 bước)</label>
-                    <button type="button" class="btn btn-sm" onclick="AdminStudio.addStepRow()">
-                        <i class="fa-solid fa-plus"></i> Thêm bước
+                <div class="grid-2 field">
+                    <div>
+                        <label>Tên Đối tác / Doanh nghiệp</label>
+                        <input type="text" id="partnerName" class="input" placeholder="VD: Công ty ABC / Khóa Sales K12" value="Đối tác Đào tạo Mẫu" oninput="AdminStudio.onMetaChange()">
+                    </div>
+                    <div>
+                        <label>Tên bài đào tạo / Quy trình</label>
+                        <input type="text" id="levelTitle" class="input" placeholder="VD: Quy trình Chốt Sales B2B" value="Quy trình Chốt Sales B2B" oninput="AdminStudio.onMetaChange()">
+                    </div>
+                </div>
+
+                <div class="grid-2 field">
+                    <div>
+                        <label>Kích thước bàn cờ</label>
+                        <select id="gridSize" class="select" onchange="AdminStudio.generateBoard()">
+                            <option value="5" selected>5×5 (25 ô · Tiêu chuẩn)</option>
+                            <option value="6">6×6 (36 ô · Chuyên sâu)</option>
+                            <option value="7">7×7 (49 ô · Nâng cao)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Độ khó vách ngăn</label>
+                        <select id="wallDiff" class="select" onchange="AdminStudio.generateBoard()">
+                            <option value="easy">Dễ (Ít vách ngăn)</option>
+                            <option value="medium" selected>Vừa (Tiêu chuẩn)</option>
+                            <option value="hard">Khó (Nhiều vách ngăn)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ĐÍNH KÈM VIDEO SAU KHI GIẢI XONG -->
+                <div class="video-attach-box">
+                    <div style="font-size:13px; font-weight:800; color:var(--brand); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-solid fa-circle-play"></i> Video bài học sau khi giải xong (Hiện Popup)</span>
+                        <button type="button" class="btn btn-sm" onclick="AdminStudio.previewVideoModal()">
+                            <i class="fa-solid fa-eye"></i> Xem thử Popup
+                        </button>
+                    </div>
+                    <div class="grid-2">
+                        <div>
+                            <label style="font-size:11.5px;">Link Video (YouTube, Google Drive, Vimeo, MP4)</label>
+                            <input type="url" id="videoUrl" class="input" placeholder="https://www.youtube.com/watch?v=..." oninput="AdminStudio.onMetaChange()">
+                        </div>
+                        <div>
+                            <label style="font-size:11.5px;">Tiêu đề video / Lời nhắn cho học viên</label>
+                            <input type="text" id="videoTitle" class="input" placeholder="VD: Video phân tích 6 bước chốt Sales chuẩn" oninput="AdminStudio.onMetaChange()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <label style="margin:0;">Các bước quy trình theo đúng thứ tự (3 – 12 bước)</label>
+                        <button type="button" class="btn btn-sm" onclick="AdminStudio.addStepRow()">
+                            <i class="fa-solid fa-plus"></i> Thêm bước
+                        </button>
+                    </div>
+                    <div id="stepsContainer" class="steps-list"></div>
+                </div>
+
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button type="button" class="btn" style="flex:1;" onclick="AdminStudio.generateBoard()">
+                        <i class="fa-solid fa-shuffle"></i> Đổi bố cục bàn cờ
+                    </button>
+                    <button type="button" class="btn btn-primary" style="flex:1.3;" onclick="AdminStudio.saveToPartnerHistory()">
+                        <i class="fa-solid fa-floppy-disk"></i> <span id="saveBtnLabel">Lưu vào Lịch sử Đối tác</span>
                     </button>
                 </div>
-                <div id="stepsContainer" class="steps-list"></div>
-            </div>
+            </section>
 
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button type="button" class="btn btn-primary" style="flex:1;" onclick="AdminStudio.generateBoard()">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Sinh bàn chơi & Đổi bố cục
-                </button>
-            </div>
-
-            <!-- KHU VỰC XUẤT BẢN GỬI HỌC VIÊN -->
-            <div class="publish-box">
-                <div class="card-title" style="margin-bottom:6px; font-size:14.5px;">
-                    <span><i class="fa-solid fa-paper-plane"></i> 2. Xuất bản gửi Học viên / Đối tác</span>
+            <!-- LỊCH SỬ CÁC GAME CỦA ĐỐI TÁC ĐỂ QUẢN LÝ & EDIT LẠI -->
+            <section class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-folder-open"></i> Lịch sử Game Đối tác (<span id="historyCount">0</span>)</span>
+                    <input type="text" id="historySearch" class="input" style="max-width:210px; padding:6px 10px; font-size:12px;" placeholder="Tìm đối tác hoặc tên bài..." oninput="AdminStudio.renderHistoryList()">
                 </div>
-                <p style="font-size:12.5px; color:var(--muted); line-height:1.5;">
-                    Sao chép đường dẫn bên dưới gửi qua Zalo/Email/LMS. Khi học viên mở link, ứng dụng sẽ tự động tải đúng bài quy trình này.
-                </p>
-                <div class="share-url-row">
-                    <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
-                    <button type="button" class="btn btn-primary" style="flex-shrink:0;" onclick="AdminStudio.copyShareUrl()">
-                        <i class="fa-regular fa-copy"></i> Copy Link
+                <div id="historyList" class="history-list"></div>
+            </section>
+        </div>
+
+        <!-- CỘT PHẢI: XEM TRƯỚC BÀN CỜ & LINK GỬI HỌC VIÊN -->
+        <div>
+            <section class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-gamepad"></i> Xem trước & Chơi thử</span>
+                    <span id="coverageStat" style="font-size:12.5px; color:var(--muted);">1/25 ô</span>
+                </div>
+
+                <div class="preview-toolbar">
+                    <button type="button" id="toggleSolBtn" class="toggle-pill active" onclick="AdminStudio.toggleSolution()">
+                        <i class="fa-solid fa-route"></i> Hiện đường đáp án
+                    </button>
+                    <button type="button" id="toggleHideNumBtn" class="toggle-pill" onclick="AdminStudio.toggleHideNumbers()">
+                        <i class="fa-regular fa-eye-slash"></i> Ẩn số (Thực chiến)
+                    </button>
+                    <button type="button" class="toggle-pill" onclick="AdminStudio.resetPlaytest()">
+                        <i class="fa-solid fa-arrows-rotate"></i> Chơi lại
                     </button>
                 </div>
-                <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
-                    <button type="button" class="btn btn-sm" onclick="AdminStudio.openLearnerPreview()">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở thử link học viên
-                    </button>
-                    <button type="button" class="btn btn-sm" onclick="AdminStudio.syncToLocalStorage()">
-                        <i class="fa-solid fa-database"></i> Lưu vào danh sách máy này
-                    </button>
-                    <button type="button" class="btn btn-sm" onclick="AdminStudio.copyJsonCode()">
-                        <i class="fa-solid fa-code"></i> Copy JSON (Dev)
-                    </button>
+
+                <div class="step-banner">
+                    <span id="previewStepBanner" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">--</span>
+                    <strong id="previewCpProgress">1/6</strong>
                 </div>
-            </div>
-        </section>
 
-        <!-- CỘT PHẢI: XEM TRƯỚC & CHƠI THỬ -->
-        <section class="card">
-            <div class="card-title">
-                <span><i class="fa-solid fa-eye"></i> Xem trước & Chơi thử</span>
-                <span id="coverageStat" style="font-size:12.5px; color:var(--muted);">1/25 ô</span>
-            </div>
-
-            <div class="preview-toolbar">
-                <button type="button" id="toggleSolBtn" class="toggle-pill active" onclick="AdminStudio.toggleSolution()">
-                    <i class="fa-solid fa-route"></i> Hiện đường đáp án
-                </button>
-                <button type="button" id="toggleHideNumBtn" class="toggle-pill" onclick="AdminStudio.toggleHideNumbers()">
-                    <i class="fa-regular fa-eye-slash"></i> Ẩn số (Thực chiến)
-                </button>
-                <button type="button" class="toggle-pill" onclick="AdminStudio.resetPlaytest()">
-                    <i class="fa-solid fa-arrows-rotate"></i> Chơi lại
-                </button>
-            </div>
-
-            <div class="step-banner">
-                <span id="previewStepBanner" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">--</span>
-                <strong id="previewCpProgress">1/6</strong>
-            </div>
-
-            <div class="board-wrap">
-                <div class="board-inner" id="boardContainer">
-                    <div class="zip-grid" id="zipGrid"></div>
-                    <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <!-- Đường đáp án mờ màu cam/vàng dành riêng cho Admin kiểm tra -->
-                        <polyline id="adminSolLine" fill="none" stroke="rgba(245, 158, 11, 0.35)" stroke-width="5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
-                        <!-- Đường kéo chơi thử màu xanh trong suốt -->
-                        <polyline id="zipPathLine" fill="none" stroke="rgba(37, 99, 235, 0.28)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" points="" />
-                        <circle id="zipHeadDot" cx="-10" cy="-10" r="3.2" fill="rgba(29, 78, 216, 0.65)" opacity="0" />
-                    </svg>
-                    <svg class="zip-walls-overlay" id="zipWallsOverlay" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+                <div class="board-wrap">
+                    <div class="board-inner" id="boardContainer">
+                        <div class="zip-grid" id="zipGrid"></div>
+                        <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <!-- Đường đáp án mờ cho giảng viên kiểm tra -->
+                            <polyline id="adminSolLine" fill="none" stroke="rgba(245, 158, 11, 0.35)" stroke-width="4.5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
+                            <!-- Đường hầm màu #4D3B9C lõm ra vào -->
+                            <g id="zipTunnelOuter" opacity="0.26"></g>
+                            <g id="zipTunnelInner" opacity="0.14"></g>
+                            <circle id="zipHeadDot" cx="-10" cy="-10" r="3" fill="rgba(77, 59, 156, 0.75)" opacity="0" />
+                        </svg>
+                        <svg class="zip-walls-overlay" id="zipWallsOverlay" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+                    </div>
                 </div>
-            </div>
 
-            <p style="text-align:center; font-size:12px; color:var(--muted); line-height:1.5;">
-                Giảng viên có thể kéo trực tiếp trên bàn cờ phía trên để kiểm tra trải nghiệm thực tế trước khi gửi link.
-            </p>
-        </section>
+                <!-- Link gửi học viên -->
+                <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:6px;">
+                    <label style="display:block; font-size:12.5px; font-weight:800; color:var(--brand); margin-bottom:4px;">
+                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (kèm bài chơi & popup video)
+                    </label>
+                    <div class="share-url-row">
+                        <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
+                        <button type="button" class="btn btn-primary" style="flex-shrink:0;" onclick="AdminStudio.copyShareUrl()">
+                            <i class="fa-regular fa-copy"></i> Copy Link
+                        </button>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-top:10px;">
+                        <button type="button" class="btn btn-sm" style="flex:1;" onclick="AdminStudio.openLearnerPreview()">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở thử giao diện Học viên
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
+
+    <!-- POPUP XEM THỬ VIDEO -->
+    <div id="adminVideoModal" class="video-modal-backdrop" onclick="if(event.target===this) AdminStudio.closeVideoModal()">
+        <div class="video-modal-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong id="adminVideoModalTitle" style="font-size:15px; color:var(--brand);">Xem trước Popup Video</strong>
+                <button type="button" onclick="AdminStudio.closeVideoModal()" style="border:none; background:#F1F5F9; width:30px; height:30px; border-radius:50%; cursor:pointer;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="adminVideoFrame" class="video-frame-wrap"></div>
+            <div style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="AdminStudio.closeVideoModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
 
     <div id="toast" class="toast"></div>
 
     <script>
-        const ZIP_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
+        const PARTNER_HISTORY_KEY = 'popminutes_partner_zip_games_v1';
+        const LEARNER_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
 
         const SAMPLE_STEPS = [
             { short: 'Tiếp cận', desc: 'Chào hỏi & tạo thiện cảm mở đầu' },
@@ -550,12 +697,15 @@
             const el = document.getElementById('toast');
             el.textContent = msg;
             el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 2400);
+            setTimeout(() => el.classList.remove('show'), 2500);
         }
 
         function encodeSharedZipLevel(level) {
             const compact = {
                 t: level.name,
+                pn: level.partnerName || '',
+                v: level.videoUrl || '',
+                vt: level.videoTitle || '',
                 s: level.size,
                 c: level.checkpoints.map(cp => [cp.r, cp.c, cp.num, cp.shortLabel, cp.label]),
                 w: level.walls,
@@ -567,7 +717,87 @@
             return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
         }
 
+        function buildShareUrlForLevel(level) {
+            const encoded = encodeSharedZipLevel(level);
+            const baseUrl = window.location.href
+                .split('#')[0]
+                .split('?')[0]
+                .replace(/zip-admin\.html$/i, 'index.html');
+            return `${baseUrl}?zip_data=${encoded}#game-zip`;
+        }
+
+        function buildVideoEmbedHtml(rawUrl) {
+            const url = (rawUrl || '').trim();
+            if (!url) return '';
+            const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (ytMatch && ytMatch[1]) {
+                return `<iframe src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            }
+            const gdMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (gdMatch && gdMatch[1]) {
+                return `<iframe src="https://drive.google.com/file/d/${gdMatch[1]}/preview" allow="autoplay" allowfullscreen></iframe>`;
+            }
+            const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+            if (vimeoMatch && vimeoMatch[1]) {
+                return `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            }
+            if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+                return `<video src="${url.replace(/"/g, '&quot;')}" controls autoplay playsinline></video>`;
+            }
+            return `<iframe src="${url.replace(/"/g, '&quot;')}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        }
+
+        function renderDugTunnelSvg(outerGroup, innerGroup, pathCoords, size) {
+            if (!pathCoords || !pathCoords.length) {
+                outerGroup.innerHTML = '';
+                innerGroup.innerHTML = '';
+                return;
+            }
+            const step = 100 / size;
+            const pts = pathCoords.map(p => `${(p.c + 0.5) * step},${(p.r + 0.5) * step}`).join(' ');
+            const cellHash = (r, c, salt) => {
+                const x = Math.sin(r * 127.1 + c * 311.7 + salt * 74.7) * 43758.5453;
+                return x - Math.floor(x);
+            };
+
+            let blobsMarkup = '';
+            for (let i = 0; i < pathCoords.length; i++) {
+                const { r, c } = pathCoords[i];
+                const cx = (c + 0.5) * step;
+                const cy = (r + 0.5) * step;
+                const h1 = cellHash(r, c, 1);
+                const h2 = cellHash(r, c, 2);
+                const h3 = cellHash(r, c, 3);
+
+                const mainRadius = step * (0.29 + h1 * 0.085);
+                const offX = (h2 - 0.5) * step * 0.08;
+                const offY = (h3 - 0.5) * step * 0.08;
+                blobsMarkup += `<circle cx="${(cx + offX).toFixed(2)}" cy="${(cy + offY).toFixed(2)}" r="${mainRadius.toFixed(2)}" fill="#4D3B9C" />`;
+
+                if (i < pathCoords.length - 1) {
+                    const next = pathCoords[i + 1];
+                    const midX = (cx + (next.c + 0.5) * step) / 2;
+                    const midY = (cy + (next.r + 0.5) * step) / 2;
+                    const perpX = -(next.r - r);
+                    const perpY = (next.c - c);
+                    const sideShift = (h2 - 0.5) * step * 0.14;
+                    const midRadius = step * (0.26 + h3 * 0.08);
+                    blobsMarkup += `<circle cx="${(midX + perpX * sideShift).toFixed(2)}" cy="${(midY + perpY * sideShift).toFixed(2)}" r="${midRadius.toFixed(2)}" fill="#4D3B9C" />`;
+                }
+            }
+
+            outerGroup.innerHTML = `
+                <polyline fill="none" stroke="#4D3B9C" stroke-width="${(step * 0.58).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" points="${pts}" />
+                ${blobsMarkup}
+            `;
+            innerGroup.innerHTML = `
+                <polyline fill="none" stroke="#4D3B9C" stroke-width="${(step * 0.26).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" points="${pts}" />
+            `;
+        }
+
         const AdminStudio = {
+            editingId: null,
+            history: [],
             steps: [],
             currentLevel: null,
             path: [],
@@ -576,15 +806,217 @@
             hideNumbers: false,
 
             init() {
-                this.loadSamplePreset();
+                this.loadHistoryFromStorage();
+                this.renderHistoryList();
+                this.startNewGame(true);
                 this.bindPointerEvents();
             },
 
-            loadSamplePreset() {
+            loadHistoryFromStorage() {
+                try {
+                    const raw = localStorage.getItem(PARTNER_HISTORY_KEY);
+                    this.history = raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    this.history = [];
+                }
+            },
+
+            persistHistory() {
+                try {
+                    localStorage.setItem(PARTNER_HISTORY_KEY, JSON.stringify(this.history));
+                    // Đồng bộ danh sách sang App học viên trên cùng trình duyệt
+                    const learnerLevels = this.history.map(item => item.level);
+                    localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
+                } catch (e) {}
+            },
+
+            startNewGame(silent) {
+                this.editingId = null;
+                document.getElementById('editingStatusBadge').style.display = 'none';
+                document.getElementById('saveBtnLabel').textContent = 'Lưu vào Lịch sử Đối tác';
+                document.getElementById('partnerName').value = 'Đối tác Đào tạo Mẫu';
                 document.getElementById('levelTitle').value = 'Quy trình Chốt Sales B2B';
+                document.getElementById('videoUrl').value = '';
+                document.getElementById('videoTitle').value = '';
+                document.getElementById('gridSize').value = '5';
+                document.getElementById('wallDiff').value = 'medium';
+
                 this.steps = SAMPLE_STEPS.map(s => ({ ...s }));
                 this.renderStepInputs();
                 this.generateBoard();
+                this.renderHistoryList();
+                if (!silent) showToast('Đã sẵn sàng tạo bài đào tạo mới.');
+            },
+
+            saveToPartnerHistory() {
+                if (!this.currentLevel) return;
+                this.syncMetaIntoCurrentLevel();
+
+                const now = new Date();
+                const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} · ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+
+                const record = {
+                    id: this.editingId || ('zip_' + Date.now()),
+                    partnerName: this.currentLevel.partnerName || 'Chưa gắn tên đối tác',
+                    title: (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình',
+                    videoUrl: this.currentLevel.videoUrl || '',
+                    videoTitle: this.currentLevel.videoTitle || '',
+                    size: this.currentLevel.size,
+                    diff: document.getElementById('wallDiff').value || 'medium',
+                    steps: this.steps.map(s => ({ ...s })),
+                    level: JSON.parse(JSON.stringify(this.currentLevel)),
+                    updatedAt: timeStr
+                };
+
+                if (this.editingId) {
+                    const idx = this.history.findIndex(h => h.id === this.editingId);
+                    if (idx !== -1) {
+                        this.history[idx] = record;
+                    } else {
+                        this.history.unshift(record);
+                    }
+                    showToast('Đã cập nhật bài đào tạo của đối tác!');
+                } else {
+                    this.editingId = record.id;
+                    this.history.unshift(record);
+                    document.getElementById('editingStatusBadge').style.display = 'inline-block';
+                    document.getElementById('saveBtnLabel').textContent = 'Cập nhật thay đổi';
+                    showToast('Đã lưu vào Lịch sử Game Đối tác!');
+                }
+
+                this.persistHistory();
+                this.renderHistoryList();
+            },
+
+            editHistoryItem(id) {
+                const record = this.history.find(h => h.id === id);
+                if (!record) return;
+
+                this.editingId = record.id;
+                document.getElementById('editingStatusBadge').style.display = 'inline-block';
+                document.getElementById('saveBtnLabel').textContent = 'Cập nhật thay đổi';
+
+                document.getElementById('partnerName').value = record.partnerName || '';
+                document.getElementById('levelTitle').value = record.title || '';
+                document.getElementById('videoUrl').value = record.videoUrl || '';
+                document.getElementById('videoTitle').value = record.videoTitle || '';
+                document.getElementById('gridSize').value = String(record.size || 5);
+                document.getElementById('wallDiff').value = record.diff || 'medium';
+
+                this.steps = (record.steps || []).map(s => ({ ...s }));
+                this.currentLevel = JSON.parse(JSON.stringify(record.level));
+
+                this.renderStepInputs();
+                this.resetPlaytest();
+                this.updateShareLink();
+                this.renderHistoryList();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast(`Đang chỉnh sửa: ${record.title}`);
+            },
+
+            duplicateHistoryItem(id) {
+                const record = this.history.find(h => h.id === id);
+                if (!record) return;
+                this.editHistoryItem(id);
+                this.editingId = null;
+                document.getElementById('editingStatusBadge').style.display = 'none';
+                document.getElementById('saveBtnLabel').textContent = 'Lưu bản sao mới';
+                document.getElementById('levelTitle').value = record.title + ' (Bản sao)';
+                this.onMetaChange();
+                showToast('Đã nhân bản! Hãy bấm "Lưu bản sao mới" để lưu.');
+            },
+
+            deleteHistoryItem(id) {
+                this.history = this.history.filter(h => h.id !== id);
+                if (this.editingId === id) {
+                    this.editingId = null;
+                    document.getElementById('editingStatusBadge').style.display = 'none';
+                    document.getElementById('saveBtnLabel').textContent = 'Lưu vào Lịch sử Đối tác';
+                }
+                this.persistHistory();
+                this.renderHistoryList();
+                showToast('Đã xóa bài khỏi lịch sử.');
+            },
+
+            copyHistoryLink(id) {
+                const record = this.history.find(h => h.id === id);
+                if (!record) return;
+                const url = buildShareUrlForLevel(record.level);
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast(`Đã sao chép link bài "${record.title}"!`);
+                });
+            },
+
+            renderHistoryList() {
+                const listEl = document.getElementById('historyList');
+                const countEl = document.getElementById('historyCount');
+                const keyword = (document.getElementById('historySearch').value || '').trim().toLowerCase();
+
+                const filtered = this.history.filter(item =>
+                    !keyword ||
+                    (item.partnerName || '').toLowerCase().includes(keyword) ||
+                    (item.title || '').toLowerCase().includes(keyword)
+                );
+
+                countEl.textContent = String(this.history.length);
+
+                if (!filtered.length) {
+                    listEl.innerHTML = `
+                        <div style="text-align:center; padding:24px 12px; color:var(--muted); font-size:13px; border:1px dashed var(--border); border-radius:14px;">
+                            Chưa có bài đào tạo nào được lưu. Hãy thiết lập quy trình phía trên và bấm <strong>Lưu vào Lịch sử Đối tác</strong>.
+                        </div>
+                    `;
+                    return;
+                }
+
+                listEl.innerHTML = filtered.map(item => `
+                    <div class="history-item ${this.editingId === item.id ? 'active-edit' : ''}">
+                        <div class="history-top">
+                            <div>
+                                <div class="history-partner"><i class="fa-solid fa-building"></i> ${item.partnerName}</div>
+                                <div class="history-title">${item.title}</div>
+                            </div>
+                            <span style="font-size:11px; font-weight:700; color:var(--muted);">${item.size}×${item.size}</span>
+                        </div>
+                        <div class="history-meta">
+                            <span><i class="fa-solid fa-list-ol"></i> ${item.steps.length} bước</span>
+                            ${item.videoUrl ? `<span style="color:#4D3B9C; font-weight:700;"><i class="fa-solid fa-circle-play"></i> Có video bài học</span>` : `<span>Không đính kèm video</span>`}
+                            <span><i class="fa-regular fa-clock"></i> ${item.updatedAt}</span>
+                        </div>
+                        <div class="history-actions">
+                            <button type="button" class="btn btn-sm btn-primary" onclick="AdminStudio.editHistoryItem('${item.id}')">
+                                <i class="fa-solid fa-pen-to-square"></i> Chỉnh sửa
+                            </button>
+                            <button type="button" class="btn btn-sm" onclick="AdminStudio.copyHistoryLink('${item.id}')">
+                                <i class="fa-regular fa-copy"></i> Copy Link
+                            </button>
+                            <button type="button" class="btn btn-sm" onclick="AdminStudio.duplicateHistoryItem('${item.id}')">
+                                <i class="fa-regular fa-clone"></i> Nhân bản
+                            </button>
+                            <button type="button" class="btn btn-sm" style="color:#DC2626;" onclick="AdminStudio.deleteHistoryItem('${item.id}')">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            syncMetaIntoCurrentLevel() {
+                if (!this.currentLevel) return;
+                const partner = (document.getElementById('partnerName').value || '').trim();
+                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
+                const videoUrl = (document.getElementById('videoUrl').value || '').trim();
+                const videoTitle = (document.getElementById('videoTitle').value || '').trim();
+
+                this.currentLevel.partnerName = partner;
+                this.currentLevel.name = partner ? `${partner} · ${titleRaw}` : `${titleRaw} (${this.currentLevel.size}×${this.currentLevel.size})`;
+                this.currentLevel.videoUrl = videoUrl;
+                this.currentLevel.videoTitle = videoTitle || titleRaw;
+            },
+
+            onMetaChange() {
+                this.syncMetaIntoCurrentLevel();
+                this.updateShareLink();
             },
 
             renderStepInputs() {
@@ -592,7 +1024,7 @@
                 container.innerHTML = this.steps.map((st, idx) => `
                     <div class="step-row">
                         <div class="step-num">${idx + 1}</div>
-                        <input type="text" maxlength="14" placeholder="Từ khóa (VD: Khảo sát)" value="${st.short.replace(/"/g, '&quot;')}" oninput="AdminStudio.onStepEdit(${idx}, 'short', this.value)">
+                        <input type="text" maxlength="14" placeholder="Từ khóa" value="${st.short.replace(/"/g, '&quot;')}" oninput="AdminStudio.onStepEdit(${idx}, 'short', this.value)">
                         <input type="text" placeholder="Mô tả chi tiết bước này..." value="${st.desc.replace(/"/g, '&quot;')}" oninput="AdminStudio.onStepEdit(${idx}, 'desc', this.value)">
                         <button type="button" class="step-del" title="Xóa bước" onclick="AdminStudio.removeStepRow(${idx})">
                             <i class="fa-solid fa-trash-can"></i>
@@ -691,7 +1123,6 @@
             generateBoard() {
                 const size = Number(document.getElementById('gridSize').value) || 5;
                 const diff = document.getElementById('wallDiff').value || 'medium';
-                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
                 const totalCells = size * size;
                 const solution = this.generateHamiltonianPath(size);
 
@@ -738,7 +1169,10 @@
                 const walls = candidateWalls.slice(0, wallTarget);
 
                 this.currentLevel = {
-                    name: `${titleRaw} (${size}×${size})`,
+                    name: '',
+                    partnerName: '',
+                    videoUrl: '',
+                    videoTitle: '',
                     size,
                     isCustom: true,
                     checkpoints,
@@ -746,6 +1180,7 @@
                     solution
                 };
 
+                this.syncMetaIntoCurrentLevel();
                 this.resetPlaytest();
                 this.updateShareLink();
             },
@@ -795,11 +1230,11 @@
                         const cp = this.getCheckpointAt(r, c);
                         let nodeHtml = '';
                         if (cp) {
-                            const badge = (!this.hideNumbers || cp.num === 1)
-                                ? `<span class="zip-step-badge">${cp.num}</span>`
+                            const numTag = (!this.hideNumbers || cp.num === 1)
+                                ? `<span class="zip-step-num">${String(cp.num).padStart(2, '0')}</span>`
                                 : '';
                             const roleClass = cp.num === 1 ? 'is-start' : (cp.num === totalCps ? 'is-end' : '');
-                            nodeHtml = `<div class="zip-node-step ${roleClass}">${badge}${cp.shortLabel}</div>`;
+                            nodeHtml = `<div class="zip-node-step ${roleClass}">${numTag}<span>${cp.shortLabel}</span></div>`;
                         }
                         html += `<div class="zip-cell" data-r="${r}" data-c="${c}">${nodeHtml}</div>`;
                     }
@@ -808,26 +1243,30 @@
 
                 const wallsSvg = document.getElementById('zipWallsOverlay');
                 const step = 100 / level.size;
-                const pad = step * 0.08;
-                let wallsMarkup = '';
+                const pad = step * 0.1;
+                const thickness = 1.9;
+
+                let wallsMarkup = `
+                    <defs>
+                        <pattern id="zipWallHatch" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                            <rect width="2.4" height="2.4" fill="#E2E8F0" />
+                            <line x1="0" y1="0" x2="0" y2="2.4" stroke="#CBD5E1" stroke-width="1.1" />
+                        </pattern>
+                    </defs>
+                `;
 
                 (level.walls || []).forEach(([[r1, c1], [r2, c2]]) => {
-                    let x1, y1, x2, y2;
                     if (r1 === r2) {
-                        const x = Math.max(c1, c2) * step;
-                        x1 = x; x2 = x;
-                        y1 = r1 * step + pad;
-                        y2 = (r1 + 1) * step - pad;
+                        const x = Math.max(c1, c2) * step - thickness / 2;
+                        const y = r1 * step + pad;
+                        const h = step - pad * 2;
+                        wallsMarkup += `<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${thickness}" height="${h.toFixed(2)}" rx="0.95" fill="url(#zipWallHatch)" stroke="#CBD5E1" stroke-width="0.35" />`;
                     } else {
-                        const y = Math.max(r1, r2) * step;
-                        x1 = c1 * step + pad;
-                        x2 = (c1 + 1) * step - pad;
-                        y1 = y; y2 = y;
+                        const x = c1 * step + pad;
+                        const y = Math.max(r1, r2) * step - thickness / 2;
+                        const w = step - pad * 2;
+                        wallsMarkup += `<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w.toFixed(2)}" height="${thickness}" rx="0.95" fill="url(#zipWallHatch)" stroke="#CBD5E1" stroke-width="0.35" />`;
                     }
-                    wallsMarkup += `
-                        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(148,163,184,0.45)" stroke-width="3.2" stroke-linecap="round" />
-                        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1E293B" stroke-width="2.1" stroke-linecap="round" />
-                    `;
                 });
                 wallsSvg.innerHTML = wallsMarkup;
             },
@@ -891,7 +1330,7 @@
                 this.updateVisuals();
 
                 if (this.path.length === total) {
-                    showToast('Chơi thử thành công! Bàn cờ hoạt động chuẩn.');
+                    showToast('Chơi thử thành công! Nếu có video, popup sẽ bật cho học viên.');
                 }
             },
 
@@ -906,10 +1345,14 @@
                     cell.classList.toggle('visited', visitedSet.has(key));
                 });
 
-                const step = 100 / level.size;
-                const pts = this.path.map(p => `${(p.c + 0.5) * step},${(p.r + 0.5) * step}`).join(' ');
-                document.getElementById('zipPathLine').setAttribute('points', pts);
+                renderDugTunnelSvg(
+                    document.getElementById('zipTunnelOuter'),
+                    document.getElementById('zipTunnelInner'),
+                    this.path,
+                    level.size
+                );
 
+                const step = 100 / level.size;
                 const solLine = document.getElementById('adminSolLine');
                 if (this.showSolution && level.solution) {
                     const solPts = level.solution.map(([r, c]) => `${(c + 0.5) * step},${(r + 0.5) * step}`).join(' ');
@@ -942,15 +1385,7 @@
 
             updateShareLink() {
                 if (!this.currentLevel) return;
-                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
-                this.currentLevel.name = `${titleRaw} (${this.currentLevel.size}×${this.currentLevel.size})`;
-
-                const encoded = encodeSharedZipLevel(this.currentLevel);
-                const baseUrl = window.location.href
-                    .split('#')[0]
-                    .split('?')[0]
-                    .replace(/zip-admin\.html$/i, 'index.html');
-                document.getElementById('shareUrlInput').value = `${baseUrl}?zip_data=${encoded}#game-zip`;
+                document.getElementById('shareUrlInput').value = buildShareUrlForLevel(this.currentLevel);
             },
 
             copyShareUrl() {
@@ -961,28 +1396,24 @@
             },
 
             openLearnerPreview() {
-                const url = document.getElementById('shareUrlInput').value;
-                window.open(url, '_blank');
+                window.open(document.getElementById('shareUrlInput').value, '_blank');
             },
 
-            syncToLocalStorage() {
-                if (!this.currentLevel) return;
-                let list = [];
-                try {
-                    const raw = localStorage.getItem(ZIP_STORAGE_KEY);
-                    if (raw) list = JSON.parse(raw);
-                } catch (e) {}
-                list = list.filter(item => item.name !== this.currentLevel.name);
-                list.unshift(this.currentLevel);
-                localStorage.setItem(ZIP_STORAGE_KEY, JSON.stringify(list));
-                showToast('Đã đồng bộ vào danh sách trên trình duyệt này!');
+            previewVideoModal() {
+                const url = (document.getElementById('videoUrl').value || '').trim();
+                if (!url) {
+                    showToast('Bạn chưa nhập Link Video ở ô phía trên.');
+                    return;
+                }
+                const title = (document.getElementById('videoTitle').value || '').trim() || document.getElementById('levelTitle').value;
+                document.getElementById('adminVideoModalTitle').textContent = title;
+                document.getElementById('adminVideoFrame').innerHTML = buildVideoEmbedHtml(url);
+                document.getElementById('adminVideoModal').classList.add('open');
             },
 
-            copyJsonCode() {
-                if (!this.currentLevel) return;
-                navigator.clipboard.writeText(JSON.stringify(this.currentLevel, null, 2)).then(() => {
-                    showToast('Đã sao chép cấu trúc JSON màn chơi!');
-                });
+            closeVideoModal() {
+                document.getElementById('adminVideoModal').classList.remove('open');
+                document.getElementById('adminVideoFrame').innerHTML = '';
             }
         };
 
