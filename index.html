@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopMinutes Studio · Tạo Game Đào Tạo Quy Trình (Zip)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --navy: #1B2B7A;
+            --navy-dark: #111C54;
+            --blue: #2563EB;
+            --bg: #F1F5F9;
+            --white: #FFFFFF;
+            --text: #0F172A;
+            --muted: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+        .topbar {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            color: #FFFFFF;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 16px rgba(17, 28, 84, 0.16);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: rgba(255, 255, 255, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .brand h1 {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+        .brand p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.78);
+        }
+        .open-app-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.14);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.15s ease;
+        }
+        .open-app-link:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 24px auto 0;
+            padding: 0 18px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 22px;
+            align-items: start;
+        }
+        @media (max-width: 880px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .field { margin-bottom: 14px; }
+        .field label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .input, .select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 11px;
+            border: 1.5px solid var(--border);
+            font-family: inherit;
+            font-size: 13.5px;
+            color: var(--text);
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .input:focus, .select:focus { border-color: var(--blue); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Danh sách từng bước SOP */
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .step-row {
+            display: grid;
+            grid-template-columns: 28px 135px 1fr 32px;
+            gap: 8px;
+            align-items: center;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 7px 8px;
+        }
+        @media (max-width: 520px) {
+            .step-row { grid-template-columns: 24px 105px 1fr 28px; gap: 6px; }
+        }
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #FFFFFF;
+            font-size: 11.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-row input {
+            width: 100%;
+            padding: 7px 9px;
+            border-radius: 8px;
+            border: 1px solid #CBD5E1;
+            font-family: inherit;
+            font-size: 12.5px;
+            background: #FFFFFF;
+            outline: none;
+        }
+        .step-row input:focus { border-color: var(--blue); }
+        .step-del {
+            border: none;
+            background: transparent;
+            color: #94A3B8;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px;
+        }
+        .step-del:hover { color: #DC2626; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            background: #FFFFFF;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn:hover { border-color: var(--navy); color: var(--navy); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            border-color: transparent;
+            color: #FFFFFF;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.24);
+        }
+        .btn-primary:hover {
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+        .btn-sm { padding: 7px 11px; font-size: 12px; border-radius: 9px; }
+
+        /* Khu vực Preview Bàn Cờ */
+        .preview-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .toggle-pill {
+            padding: 6px 11px;
+            border-radius: 9px;
+            border: 1.5px solid var(--border);
+            background: #F8FAFC;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .toggle-pill.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: #FFFFFF;
+        }
+        .step-banner {
+            background: #EFF6FF;
+            border: 1px solid #DBEAFE;
+            border-radius: 11px;
+            padding: 9px 12px;
+            font-size: 12.5px;
+            color: var(--navy);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .board-wrap {
+            width: 100%;
+            max-width: 380px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 14px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+            border-radius: 24px;
+            padding: 12px;
+            border: 1.5px solid #E2E8F0;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+            user-select: none;
+            touch-action: none;
+        }
+        .board-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #FFFFFF;
+            border: 1.5px solid #CBD5E1;
+        }
+        .zip-grid {
+            display: grid;
+            width: 100%;
+            height: 100%;
+        }
+        .zip-cell {
+            position: relative;
+            border-right: 1px solid #EEF2F6;
+            border-bottom: 1px solid #EEF2F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .zip-svg-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .zip-walls-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .zip-node-step {
+            position: relative;
+            z-index: 4;
+            width: 84%;
+            min-height: 54%;
+            padding: 4px 5px;
+            border-radius: 12px;
+            background: #FFFFFF;
+            border: 1.8px solid #94A3B8;
+            color: #0F172A;
+            font-size: 10.5px;
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-word;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+            pointer-events: none;
+            transition: all 0.15s ease;
+        }
+        .zip-node-step.is-start {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border-color: #2563EB;
+            color: #1E3A8A;
+        }
+        .zip-node-step.is-end {
+            border-style: dashed;
+            border-color: #0D9488;
+        }
+        .zip-cell.visited .zip-node-step {
+            background: linear-gradient(135deg, #1B2B7A 0%, #2563EB 100%);
+            border-style: solid;
+            border-color: #1B2B7A;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+        }
+        .zip-step-badge {
+            position: absolute;
+            top: -6px;
+            left: -5px;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            border-radius: 8px;
+            background: #2563EB;
+            border: 1.5px solid #FFFFFF;
+            color: #FFFFFF;
+            font-size: 9px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .zip-cell.visited .zip-step-badge { background: #10B981; }
+
+        /* Hộp xuất bản gửi học viên */
+        .publish-box {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .share-url-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            z-index: 999;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-badge"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div>
+                <h1>PopMinutes · Studio Đào Tạo</h1>
+                <p>Trang soạn & xuất bản bài thực hành quy trình (Zip)</p>
+            </div>
+        </div>
+        <a href="index.html#game-zip" target="_blank" class="open-app-link">
+            <i class="fa-solid fa-mobile-screen"></i> Mở App Học Viên
+        </a>
+    </header>
+
+    <main class="container">
+        <!-- CỘT TRÁI: TRÌNH SOẠN QUY TRÌNH -->
+        <section class="card">
+            <div class="card-title">
+                <span><i class="fa-solid fa-sliders"></i> 1. Cấu hình Quy trình Đào tạo</span>
+                <button type="button" class="btn btn-sm" onclick="AdminStudio.loadSamplePreset()">
+                    <i class="fa-solid fa-rotate"></i> Nạp mẫu Sales B2B
+                </button>
+            </div>
+
+            <div class="field">
+                <label>Tên bài đào tạo / Quy trình</label>
+                <input type="text" id="levelTitle" class="input" value="Quy trình Chốt Sales B2B" oninput="AdminStudio.updateShareLink()">
+            </div>
+
+            <div class="grid-2 field">
+                <div>
+                    <label>Kích thước bàn cờ</label>
+                    <select id="gridSize" class="select" onchange="AdminStudio.generateBoard()">
+                        <option value="5" selected>5×5 (25 ô · Tiêu chuẩn)</option>
+                        <option value="6">6×6 (36 ô · Chuyên sâu)</option>
+                        <option value="7">7×7 (49 ô · Nâng cao)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Độ khó vách ngăn</label>
+                    <select id="wallDiff" class="select" onchange="AdminStudio.generateBoard()">
+                        <option value="easy">Dễ (Ít vách ngăn)</option>
+                        <option value="medium" selected>Vừa (Tiêu chuẩn)</option>
+                        <option value="hard">Khó (Nhiều vách ngăn)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <label style="margin:0;">Các bước quy trình theo đúng thứ tự (3 – 12 bước)</label>
+                    <button type="button" class="btn btn-sm" onclick="AdminStudio.addStepRow()">
+                        <i class="fa-solid fa-plus"></i> Thêm bước
+                    </button>
+                </div>
+                <div id="stepsContainer" class="steps-list"></div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-primary" style="flex:1;" onclick="AdminStudio.generateBoard()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Sinh bàn chơi & Đổi bố cục
+                </button>
+            </div>
+
+            <!-- KHU VỰC XUẤT BẢN GỬI HỌC VIÊN -->
+            <div class="publish-box">
+                <div class="card-title" style="margin-bottom:6px; font-size:14.5px;">
+                    <span><i class="fa-solid fa-paper-plane"></i> 2. Xuất bản gửi Học viên / Đối tác</span>
+                </div>
+                <p style="font-size:12.5px; color:var(--muted); line-height:1.5;">
+                    Sao chép đường dẫn bên dưới gửi qua Zalo/Email/LMS. Khi học viên mở link, ứng dụng sẽ tự động tải đúng bài quy trình này.
+                </p>
+                <div class="share-url-row">
+                    <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
+                    <button type="button" class="btn btn-primary" style="flex-shrink:0;" onclick="AdminStudio.copyShareUrl()">
+                        <i class="fa-regular fa-copy"></i> Copy Link
+                    </button>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-sm" onclick="AdminStudio.openLearnerPreview()">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở thử link học viên
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="AdminStudio.syncToLocalStorage()">
+                        <i class="fa-solid fa-database"></i> Lưu vào danh sách máy này
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="AdminStudio.copyJsonCode()">
+                        <i class="fa-solid fa-code"></i> Copy JSON (Dev)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CỘT PHẢI: XEM TRƯỚC & CHƠI THỬ -->
+        <section class="card">
+            <div class="card-title">
+                <span><i class="fa-solid fa-eye"></i> Xem trước & Chơi thử</span>
+                <span id="coverageStat" style="font-size:12.5px; color:var(--muted);">1/25 ô</span>
+            </div>
+
+            <div class="preview-toolbar">
+                <button type="button" id="toggleSolBtn" class="toggle-pill active" onclick="AdminStudio.toggleSolution()">
+                    <i class="fa-solid fa-route"></i> Hiện đường đáp án
+                </button>
+                <button type="button" id="toggleHideNumBtn" class="toggle-pill" onclick="AdminStudio.toggleHideNumbers()">
+                    <i class="fa-regular fa-eye-slash"></i> Ẩn số (Thực chiến)
+                </button>
+                <button type="button" class="toggle-pill" onclick="AdminStudio.resetPlaytest()">
+                    <i class="fa-solid fa-arrows-rotate"></i> Chơi lại
+                </button>
+            </div>
+
+            <div class="step-banner">
+                <span id="previewStepBanner" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">--</span>
+                <strong id="previewCpProgress">1/6</strong>
+            </div>
+
+            <div class="board-wrap">
+                <div class="board-inner" id="boardContainer">
+                    <div class="zip-grid" id="zipGrid"></div>
+                    <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Đường đáp án mờ màu cam/vàng dành riêng cho Admin kiểm tra -->
+                        <polyline id="adminSolLine" fill="none" stroke="rgba(245, 158, 11, 0.35)" stroke-width="5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
+                        <!-- Đường kéo chơi thử màu xanh trong suốt -->
+                        <polyline id="zipPathLine" fill="none" stroke="rgba(37, 99, 235, 0.28)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" points="" />
+                        <circle id="zipHeadDot" cx="-10" cy="-10" r="3.2" fill="rgba(29, 78, 216, 0.65)" opacity="0" />
+                    </svg>
+                    <svg class="zip-walls-overlay" id="zipWallsOverlay" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+                </div>
+            </div>
+
+            <p style="text-align:center; font-size:12px; color:var(--muted); line-height:1.5;">
+                Giảng viên có thể kéo trực tiếp trên bàn cờ phía trên để kiểm tra trải nghiệm thực tế trước khi gửi link.
+            </p>
+        </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const ZIP_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
+
+        const SAMPLE_STEPS = [
+            { short: 'Tiếp cận', desc: 'Chào hỏi & tạo thiện cảm mở đầu' },
+            { short: 'Khai thác', desc: 'Đặt câu hỏi tìm nỗi đau khách hàng' },
+            { short: 'Phân tích', desc: 'Tóm tắt nhu cầu & ngân sách thực tế' },
+            { short: 'Giải pháp', desc: 'Trình bày tính năng khớp vấn đề' },
+            { short: 'Xử lý', desc: 'Giải đáp băn khoăn về chi phí & vận hành' },
+            { short: 'Chốt hẹn', desc: 'Thống nhất lịch demo hoặc ký hợp đồng' }
+        ];
+
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2400);
+        }
+
+        function encodeSharedZipLevel(level) {
+            const compact = {
+                t: level.name,
+                s: level.size,
+                c: level.checkpoints.map(cp => [cp.r, cp.c, cp.num, cp.shortLabel, cp.label]),
+                w: level.walls,
+                p: level.solution
+            };
+            const bytes = new TextEncoder().encode(JSON.stringify(compact));
+            let bin = '';
+            bytes.forEach(b => bin += String.fromCharCode(b));
+            return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        }
+
+        const AdminStudio = {
+            steps: [],
+            currentLevel: null,
+            path: [],
+            isDragging: false,
+            showSolution: true,
+            hideNumbers: false,
+
+            init() {
+                this.loadSamplePreset();
+                this.bindPointerEvents();
+            },
+
+            loadSamplePreset() {
+                document.getElementById('levelTitle').value = 'Quy trình Chốt Sales B2B';
+                this.steps = SAMPLE_STEPS.map(s => ({ ...s }));
+                this.renderStepInputs();
+                this.generateBoard();
+            },
+
+            renderStepInputs() {
+                const container = document.getElementById('stepsContainer');
+                container.innerHTML = this.steps.map((st, idx) => `
+                    <div class="step-row">
+                        <div class="step-num">${idx + 1}</div>
+                        <input type="text" maxlength="14" placeholder="Từ khóa (VD: Khảo sát)" value="${st.short.replace(/"/g, '&quot;')}" oninput="AdminStudio.onStepEdit(${idx}, 'short', this.value)">
+                        <input type="text" placeholder="Mô tả chi tiết bước này..." value="${st.desc.replace(/"/g, '&quot;')}" oninput="AdminStudio.onStepEdit(${idx}, 'desc', this.value)">
+                        <button type="button" class="step-del" title="Xóa bước" onclick="AdminStudio.removeStepRow(${idx})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `).join('');
+            },
+
+            onStepEdit(idx, field, val) {
+                this.steps[idx][field] = val;
+                if (this.currentLevel) {
+                    const cp = this.currentLevel.checkpoints[idx];
+                    if (cp) {
+                        cp.shortLabel = (this.steps[idx].short || '').trim() || `Bước ${idx + 1}`;
+                        cp.label = `${idx + 1}. ${(this.steps[idx].desc || cp.shortLabel).trim()}`;
+                    }
+                    this.renderBoard();
+                    this.updateVisuals();
+                    this.updateShareLink();
+                }
+            },
+
+            addStepRow() {
+                if (this.steps.length >= 12) {
+                    showToast('Tối đa 12 bước quy trình trên một bàn cờ.');
+                    return;
+                }
+                const n = this.steps.length + 1;
+                this.steps.push({ short: `Bước ${n}`, desc: `Mô tả hành động của bước ${n}` });
+                this.renderStepInputs();
+                this.generateBoard();
+            },
+
+            removeStepRow(idx) {
+                if (this.steps.length <= 3) {
+                    showToast('Cần tối thiểu 3 bước quy trình.');
+                    return;
+                }
+                this.steps.splice(idx, 1);
+                this.renderStepInputs();
+                this.generateBoard();
+            },
+
+            generateHamiltonianPath(size) {
+                const total = size * size;
+                const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+                const countDeg = (r, c, vis) => {
+                    let cnt = 0;
+                    for (const [dr, dc] of dirs) {
+                        const nr = r + dr, nc = c + dc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && !vis[nr][nc]) cnt++;
+                    }
+                    return cnt;
+                };
+
+                for (let attempt = 0; attempt < 30; attempt++) {
+                    const sr = Math.floor(Math.random() * size);
+                    const sc = Math.floor(Math.random() * size);
+                    const vis = Array.from({ length: size }, () => Array(size).fill(false));
+                    const path = [[sr, sc]];
+                    vis[sr][sc] = true;
+                    let steps = 0;
+
+                    const dfs = (r, c) => {
+                        if (path.length === total) return true;
+                        if (++steps > 3500) return false;
+                        const cands = [];
+                        for (const [dr, dc] of dirs) {
+                            const nr = r + dr, nc = c + dc;
+                            if (nr >= 0 && nr < size && nc >= 0 && nc < size && !vis[nr][nc]) {
+                                cands.push({ r: nr, c: nc, deg: countDeg(nr, nc, vis), rand: Math.random() });
+                            }
+                        }
+                        cands.sort((a, b) => (a.deg - b.deg) || (a.rand - b.rand));
+                        for (const nx of cands) {
+                            vis[nx.r][nx.c] = true;
+                            path.push([nx.r, nx.c]);
+                            if (dfs(nx.r, nx.c)) return true;
+                            path.pop();
+                            vis[nx.r][nx.c] = false;
+                        }
+                        return false;
+                    };
+                    if (dfs(sr, sc)) return path;
+                }
+
+                const fallback = [];
+                for (let r = 0; r < size; r++) {
+                    for (let c = 0; c < size; c++) {
+                        fallback.push([r, r % 2 === 0 ? c : size - 1 - c]);
+                    }
+                }
+                return fallback;
+            },
+
+            generateBoard() {
+                const size = Number(document.getElementById('gridSize').value) || 5;
+                const diff = document.getElementById('wallDiff').value || 'medium';
+                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
+                const totalCells = size * size;
+                const solution = this.generateHamiltonianPath(size);
+
+                const k = this.steps.length;
+                const checkpoints = this.steps.map((st, idx) => {
+                    let pathIdx;
+                    if (idx === 0) pathIdx = 0;
+                    else if (idx === k - 1) pathIdx = totalCells - 1;
+                    else pathIdx = Math.round((idx * (totalCells - 1)) / (k - 1));
+
+                    const [r, c] = solution[pathIdx];
+                    const shortLabel = (st.short || '').trim() || `Bước ${idx + 1}`;
+                    const fullDesc = (st.desc || '').trim() || shortLabel;
+                    return {
+                        r,
+                        c,
+                        num: idx + 1,
+                        shortLabel,
+                        label: `${idx + 1}. ${fullDesc}`
+                    };
+                });
+
+                const solEdges = new Set();
+                for (let i = 0; i < solution.length - 1; i++) {
+                    const [r1, c1] = solution[i];
+                    const [r2, c2] = solution[i + 1];
+                    solEdges.add(`${r1},${c1}-${r2},${c2}`);
+                    solEdges.add(`${r2},${c2}-${r1},${c1}`);
+                }
+
+                const candidateWalls = [];
+                for (let r = 0; r < size; r++) {
+                    for (let c = 0; c < size; c++) {
+                        if (r + 1 < size && !solEdges.has(`${r},${c}-${r + 1},${c}`)) {
+                            candidateWalls.push([[r, c], [r + 1, c]]);
+                        }
+                        if (c + 1 < size && !solEdges.has(`${r},${c}-${r},${c + 1}`)) {
+                            candidateWalls.push([[r, c], [r, c + 1]]);
+                        }
+                    }
+                }
+                candidateWalls.sort(() => Math.random() - 0.5);
+                const wallTarget = diff === 'easy' ? 3 : (diff === 'hard' ? size * 2 : Math.round(size * 1.3));
+                const walls = candidateWalls.slice(0, wallTarget);
+
+                this.currentLevel = {
+                    name: `${titleRaw} (${size}×${size})`,
+                    size,
+                    isCustom: true,
+                    checkpoints,
+                    walls,
+                    solution
+                };
+
+                this.resetPlaytest();
+                this.updateShareLink();
+            },
+
+            resetPlaytest() {
+                if (!this.currentLevel) return;
+                const startCp = this.currentLevel.checkpoints[0];
+                this.path = [{ r: startCp.r, c: startCp.c }];
+                this.renderBoard();
+                this.updateVisuals();
+            },
+
+            toggleSolution() {
+                this.showSolution = !this.showSolution;
+                document.getElementById('toggleSolBtn').classList.toggle('active', this.showSolution);
+                this.updateVisuals();
+            },
+
+            toggleHideNumbers() {
+                this.hideNumbers = !this.hideNumbers;
+                document.getElementById('toggleHideNumBtn').classList.toggle('active', this.hideNumbers);
+                this.renderBoard();
+                this.updateVisuals();
+            },
+
+            hasWallBetween(r1, c1, r2, c2) {
+                return (this.currentLevel.walls || []).some(([a, b]) =>
+                    (a[0] === r1 && a[1] === c1 && b[0] === r2 && b[1] === c2) ||
+                    (b[0] === r1 && b[1] === c1 && a[0] === r2 && a[1] === c2)
+                );
+            },
+
+            getCheckpointAt(r, c) {
+                return this.currentLevel.checkpoints.find(cp => cp.r === r && cp.c === c) || null;
+            },
+
+            renderBoard() {
+                const level = this.currentLevel;
+                const gridEl = document.getElementById('zipGrid');
+                gridEl.style.gridTemplateColumns = `repeat(${level.size}, 1fr)`;
+                gridEl.style.gridTemplateRows = `repeat(${level.size}, 1fr)`;
+
+                const totalCps = level.checkpoints.length;
+                let html = '';
+                for (let r = 0; r < level.size; r++) {
+                    for (let c = 0; c < level.size; c++) {
+                        const cp = this.getCheckpointAt(r, c);
+                        let nodeHtml = '';
+                        if (cp) {
+                            const badge = (!this.hideNumbers || cp.num === 1)
+                                ? `<span class="zip-step-badge">${cp.num}</span>`
+                                : '';
+                            const roleClass = cp.num === 1 ? 'is-start' : (cp.num === totalCps ? 'is-end' : '');
+                            nodeHtml = `<div class="zip-node-step ${roleClass}">${badge}${cp.shortLabel}</div>`;
+                        }
+                        html += `<div class="zip-cell" data-r="${r}" data-c="${c}">${nodeHtml}</div>`;
+                    }
+                }
+                gridEl.innerHTML = html;
+
+                const wallsSvg = document.getElementById('zipWallsOverlay');
+                const step = 100 / level.size;
+                const pad = step * 0.08;
+                let wallsMarkup = '';
+
+                (level.walls || []).forEach(([[r1, c1], [r2, c2]]) => {
+                    let x1, y1, x2, y2;
+                    if (r1 === r2) {
+                        const x = Math.max(c1, c2) * step;
+                        x1 = x; x2 = x;
+                        y1 = r1 * step + pad;
+                        y2 = (r1 + 1) * step - pad;
+                    } else {
+                        const y = Math.max(r1, r2) * step;
+                        x1 = c1 * step + pad;
+                        x2 = (c1 + 1) * step - pad;
+                        y1 = y; y2 = y;
+                    }
+                    wallsMarkup += `
+                        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(148,163,184,0.45)" stroke-width="3.2" stroke-linecap="round" />
+                        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1E293B" stroke-width="2.1" stroke-linecap="round" />
+                    `;
+                });
+                wallsSvg.innerHTML = wallsMarkup;
+            },
+
+            bindPointerEvents() {
+                const container = document.getElementById('boardContainer');
+                const getCell = (cx, cy) => {
+                    const el = document.elementFromPoint(cx, cy);
+                    const cell = el ? el.closest('.zip-cell') : null;
+                    return cell ? { r: Number(cell.dataset.r), c: Number(cell.dataset.c) } : null;
+                };
+                container.addEventListener('pointerdown', (e) => {
+                    const pos = getCell(e.clientX, e.clientY);
+                    if (!pos) return;
+                    this.isDragging = true;
+                    this.handleInteract(pos.r, pos.c);
+                });
+                window.addEventListener('pointermove', (e) => {
+                    if (!this.isDragging) return;
+                    const pos = getCell(e.clientX, e.clientY);
+                    if (pos) this.handleInteract(pos.r, pos.c);
+                });
+                window.addEventListener('pointerup', () => { this.isDragging = false; });
+            },
+
+            handleInteract(r, c) {
+                const head = this.path[this.path.length - 1];
+                if (head.r === r && head.c === c) return;
+
+                if (this.path.length >= 2) {
+                    const prev = this.path[this.path.length - 2];
+                    if (prev.r === r && prev.c === c) {
+                        this.path.pop();
+                        this.updateVisuals();
+                        return;
+                    }
+                }
+
+                const existingIdx = this.path.findIndex(p => p.r === r && p.c === c);
+                if (existingIdx !== -1) {
+                    this.path = this.path.slice(0, existingIdx + 1);
+                    this.updateVisuals();
+                    return;
+                }
+
+                const isAdj = Math.abs(head.r - r) + Math.abs(head.c - c) === 1;
+                if (!isAdj || this.hasWallBetween(head.r, head.c, r, c)) return;
+
+                let maxCp = 1;
+                for (const p of this.path) {
+                    const cp = this.getCheckpointAt(p.r, p.c);
+                    if (cp && cp.num > maxCp) maxCp = cp.num;
+                }
+                const cp = this.getCheckpointAt(r, c);
+                if (cp && cp.num !== maxCp + 1) return;
+
+                const total = this.currentLevel.size * this.currentLevel.size;
+                if (cp && cp.num === this.currentLevel.checkpoints.length && this.path.length + 1 < total) return;
+
+                this.path.push({ r, c });
+                this.updateVisuals();
+
+                if (this.path.length === total) {
+                    showToast('Chơi thử thành công! Bàn cờ hoạt động chuẩn.');
+                }
+            },
+
+            updateVisuals() {
+                const level = this.currentLevel;
+                const total = level.size * level.size;
+                const visitedSet = new Set(this.path.map(p => `${p.r},${p.c}`));
+                const head = this.path[this.path.length - 1];
+
+                document.querySelectorAll('#zipGrid .zip-cell').forEach(cell => {
+                    const key = `${cell.dataset.r},${cell.dataset.c}`;
+                    cell.classList.toggle('visited', visitedSet.has(key));
+                });
+
+                const step = 100 / level.size;
+                const pts = this.path.map(p => `${(p.c + 0.5) * step},${(p.r + 0.5) * step}`).join(' ');
+                document.getElementById('zipPathLine').setAttribute('points', pts);
+
+                const solLine = document.getElementById('adminSolLine');
+                if (this.showSolution && level.solution) {
+                    const solPts = level.solution.map(([r, c]) => `${(c + 0.5) * step},${(r + 0.5) * step}`).join(' ');
+                    solLine.setAttribute('points', solPts);
+                } else {
+                    solLine.setAttribute('points', '');
+                }
+
+                const headDot = document.getElementById('zipHeadDot');
+                if (this.getCheckpointAt(head.r, head.c)) {
+                    headDot.setAttribute('opacity', '0');
+                } else {
+                    headDot.setAttribute('cx', (head.c + 0.5) * step);
+                    headDot.setAttribute('cy', (head.r + 0.5) * step);
+                    headDot.setAttribute('opacity', '1');
+                }
+
+                let maxCp = 1;
+                for (const p of this.path) {
+                    const cp = this.getCheckpointAt(p.r, p.c);
+                    if (cp && cp.num > maxCp) maxCp = cp.num;
+                }
+                const nextNum = Math.min(maxCp + 1, level.checkpoints.length);
+                const nextCp = level.checkpoints.find(cp => cp.num === nextNum) || level.checkpoints[level.checkpoints.length - 1];
+
+                document.getElementById('coverageStat').textContent = `${this.path.length}/${total} ô`;
+                document.getElementById('previewCpProgress').textContent = `${maxCp}/${level.checkpoints.length}`;
+                document.getElementById('previewStepBanner').innerHTML = `Tiếp theo: <strong>${nextCp.label}</strong>`;
+            },
+
+            updateShareLink() {
+                if (!this.currentLevel) return;
+                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
+                this.currentLevel.name = `${titleRaw} (${this.currentLevel.size}×${this.currentLevel.size})`;
+
+                const encoded = encodeSharedZipLevel(this.currentLevel);
+                const baseUrl = window.location.href
+                    .split('#')[0]
+                    .split('?')[0]
+                    .replace(/zip-admin\.html$/i, 'index.html');
+                document.getElementById('shareUrlInput').value = `${baseUrl}?zip_data=${encoded}#game-zip`;
+            },
+
+            copyShareUrl() {
+                const input = document.getElementById('shareUrlInput');
+                navigator.clipboard.writeText(input.value).then(() => {
+                    showToast('Đã sao chép link gửi học viên!');
+                });
+            },
+
+            openLearnerPreview() {
+                const url = document.getElementById('shareUrlInput').value;
+                window.open(url, '_blank');
+            },
+
+            syncToLocalStorage() {
+                if (!this.currentLevel) return;
+                let list = [];
+                try {
+                    const raw = localStorage.getItem(ZIP_STORAGE_KEY);
+                    if (raw) list = JSON.parse(raw);
+                } catch (e) {}
+                list = list.filter(item => item.name !== this.currentLevel.name);
+                list.unshift(this.currentLevel);
+                localStorage.setItem(ZIP_STORAGE_KEY, JSON.stringify(list));
+                showToast('Đã đồng bộ vào danh sách trên trình duyệt này!');
+            },
+
+            copyJsonCode() {
+                if (!this.currentLevel) return;
+                navigator.clipboard.writeText(JSON.stringify(this.currentLevel, null, 2)).then(() => {
+                    showToast('Đã sao chép cấu trúc JSON màn chơi!');
+                });
+            }
+        };
+
+        AdminStudio.init();
+    </script>
+</body>
+</html>
