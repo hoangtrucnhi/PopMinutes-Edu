@@ -675,10 +675,10 @@
                     </div>
                 </div>
 
-                <!-- Link gửi học viên -->
+                <!-- Link gửi học viên & Đồng bộ đa thiết bị -->
                 <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:6px;">
                     <label style="display:block; font-size:12.5px; font-weight:800; color:var(--navy); margin-bottom:4px;">
-                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (kèm bài chơi & popup tài liệu/video)
+                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (Mở được trên mọi máy)
                     </label>
                     <div class="share-url-row">
                         <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
@@ -690,6 +690,22 @@
                         <button type="button" class="btn btn-sm" style="flex:1;" onclick="AdminStudio.openLearnerPreview()">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở thử giao diện Học viên
                         </button>
+                    </div>
+
+                    <!-- Cấu hình đồng bộ tự động lên mọi thiết bị qua Google Sheets -->
+                    <div style="margin-top:14px; padding:12px; background:#F8FAFC; border:1px solid var(--border); border-radius:12px;">
+                        <label style="display:block; font-size:12px; font-weight:800; color:var(--navy); margin-bottom:4px;">
+                            <i class="fa-solid fa-cloud-arrow-up" style="color:var(--blue);"></i> Link đồng bộ Cloud (Google Apps Script URL)
+                        </label>
+                        <p style="font-size:11.5px; color:var(--muted); margin-bottom:8px; line-height:1.45;">
+                            Dán URL Google Apps Script để mỗi khi lưu bài, game tự động cập nhật sang <strong>tất cả máy tính & điện thoại khác</strong>.
+                        </p>
+                        <div style="display:flex; gap:6px;">
+                            <input type="url" id="cloudSyncUrlInput" class="input" style="font-size:12px; padding:8px 10px;" placeholder="https://script.google.com/macros/s/.../exec" onchange="AdminStudio.saveCloudUrl(this.value)">
+                            <button type="button" class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="AdminStudio.pushHistoryToCloud()">
+                                <i class="fa-solid fa-rotate"></i> Đẩy lên Cloud
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -731,6 +747,8 @@
     <script>
         const PARTNER_HISTORY_KEY = 'popminutes_partner_zip_games_v1';
         const LEARNER_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
+        const CLOUD_URL_STORAGE_KEY = 'popminutes_zip_cloud_url_v1';
+        const DEFAULT_CLOUD_SYNC_URL = '';
 
         const SAMPLE_STEPS = [
             { short: 'Tiếp cận', desc: 'Chào hỏi & tạo thiện cảm mở đầu' },
@@ -867,6 +885,10 @@
             hideNumbers: false,
 
             init() {
+                const savedCloudUrl = localStorage.getItem(CLOUD_URL_STORAGE_KEY) || DEFAULT_CLOUD_SYNC_URL;
+                const cloudInput = document.getElementById('cloudSyncUrlInput');
+                if (cloudInput) cloudInput.value = savedCloudUrl;
+
                 this.loadHistoryFromStorage();
                 this.renderHistoryList();
                 this.startNewGame(true);
@@ -888,6 +910,30 @@
                     const learnerLevels = this.history.map(item => item.level);
                     localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
                 } catch (e) {}
+            },
+            saveCloudUrl(url) {
+                localStorage.setItem(CLOUD_URL_STORAGE_KEY, (url || '').trim());
+                showToast('Đã lưu đường dẫn đồng bộ Cloud!');
+            },
+
+            async pushHistoryToCloud() {
+                const url = (document.getElementById('cloudSyncUrlInput').value || '').trim();
+                if (!url) {
+                    showToast('Vui lòng dán URL Google Apps Script trước.');
+                    return;
+                }
+                localStorage.setItem(CLOUD_URL_STORAGE_KEY, url);
+                const learnerLevels = this.history.map(item => item.level);
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(learnerLevels)
+                    });
+                    showToast('Đã đẩy toàn bộ bài đào tạo lên Cloud cho mọi máy!');
+                } catch (e) {
+                    showToast('Lỗi kết nối Cloud, vui lòng kiểm tra lại URL.');
+                }
             },
 
             startNewGame(silent) {
@@ -949,6 +995,9 @@
                 }
 
                 this.persistHistory();
+                if ((document.getElementById('cloudSyncUrlInput').value || '').trim()) {
+                    this.pushHistoryToCloud();
+                }
                 this.renderHistoryList();
             },
 
