@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PopMinutes Studio · Quản Lý Game Đào Tạo Đối Tác</title>
+    <title>PopMinutes · Studio Quản Lý Đào Tạo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,20 +55,6 @@
         }
         .brand h1 { font-size: 16px; font-weight: 800; }
         .brand p { font-size: 12px; color: rgba(255, 255, 255, 0.82); }
-        .open-app-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 14px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            transition: background 0.15s ease;
-        }
-        .open-app-link:hover { background: rgba(255, 255, 255, 0.25); }
 
         .container {
             max-width: 1180px;
@@ -141,7 +127,7 @@
             .grid-2 { grid-template-columns: 1fr; }
         }
 
-        /* Danh sách từng bước SOP */
+        /* Danh sách từng bước quy trình */
         .steps-list {
             display: flex;
             flex-direction: column;
@@ -233,7 +219,7 @@
         }
         .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 9px; }
 
-        /* Lịch sử Game Đối tác */
+        /* Thư viện Game Đối tác */
         .history-list {
             display: flex;
             flex-direction: column;
@@ -291,7 +277,7 @@
             gap: 6px;
         }
 
-        /* Bàn cờ Preview đồng bộ giao diện học viên (Xanh chủ đạo + Đường hầm #4D3B9C) */
+        /* Bàn cờ Preview (Xanh chủ đạo + Đường hầm #4D3B9C) */
         .preview-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -516,16 +502,13 @@
             <div class="brand-badge"><i class="fa-solid fa-graduation-cap"></i></div>
             <div>
                 <h1>PopMinutes · Studio Quản Lý Đào Tạo</h1>
-                <p>Soạn quy trình, đính kèm video / tài liệu PDF & quản lý thư viện game đối tác</p>
+                <p>Soạn quy trình, đính kèm video / tài liệu PDF & quản lý thư viện game</p>
             </div>
         </div>
-        <a href="index.html#game-zip" target="_blank" class="open-app-link">
-            <i class="fa-solid fa-mobile-screen"></i> Mở App Học Viên
-        </a>
     </header>
 
     <main class="container">
-        <!-- CỘT TRÁI: TRÌNH SOẠN & LỊCH SỬ GAME ĐỐI TÁC -->
+        <!-- CỘT TRÁI: TRÌNH SOẠN & THƯ VIỆN GAME ĐỐI TÁC -->
         <div>
             <section class="card">
                 <div class="card-title">
@@ -540,11 +523,11 @@
 
                 <div class="grid-2 field">
                     <div>
-                        <label>Tên Đối tác / Doanh nghiệp</label>
-                        <input type="text" id="partnerName" class="input" placeholder="VD: Công ty ABC / Khóa Sales K12" value="Đối tác Đào tạo Mẫu" oninput="AdminStudio.onMetaChange()">
+                        <label>Tên Đối tác / Đơn vị đào tạo</label>
+                        <input type="text" id="partnerName" class="input" placeholder="VD: Học viện Sales ABC" value="Đối tác Đào tạo Mẫu" oninput="AdminStudio.onMetaChange()">
                     </div>
                     <div>
-                        <label>Tên bài đào tạo / Quy trình</label>
+                        <label>Tên bài / Quy trình thực chiến</label>
                         <input type="text" id="levelTitle" class="input" placeholder="VD: Quy trình Chốt Sales B2B" value="Quy trình Chốt Sales B2B" oninput="AdminStudio.onMetaChange()">
                     </div>
                 </div>
@@ -571,7 +554,7 @@
                 <!-- ĐÍNH KÈM VIDEO & TÀI LIỆU PDF SAU KHI GIẢI XONG -->
                 <div class="attach-box">
                     <div style="font-size:13px; font-weight:800; color:var(--navy); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <span><i class="fa-solid fa-paperclip"></i> Nội dung đính kèm sau khi giải xong (Hiện Popup)</span>
+                        <span><i class="fa-solid fa-paperclip"></i> Nội dung đính kèm sau khi hoàn thành (Hiện Popup)</span>
                         <button type="button" class="btn btn-sm" onclick="AdminStudio.previewRewardModal()">
                             <i class="fa-solid fa-eye"></i> Xem thử Popup
                         </button>
@@ -620,22 +603,22 @@
                         <i class="fa-solid fa-shuffle"></i> Đổi bố cục bàn cờ
                     </button>
                     <button type="button" class="btn btn-primary" style="flex:1.3;" onclick="AdminStudio.saveToPartnerHistory()">
-                        <i class="fa-solid fa-floppy-disk"></i> <span id="saveBtnLabel">Lưu vào Lịch sử Đối tác</span>
+                        <i class="fa-solid fa-floppy-disk"></i> <span id="saveBtnLabel">Lưu vào Thư viện Game</span>
                     </button>
                 </div>
             </section>
 
-            <!-- LỊCH SỬ CÁC GAME CỦA ĐỐI TÁC ĐỂ QUẢN LÝ & EDIT LẠI -->
+            <!-- THƯ VIỆN / LỊCH SỬ CÁC GAME CỦA ĐỐI TÁC -->
             <section class="card">
                 <div class="card-title">
-                    <span><i class="fa-solid fa-folder-open"></i> Lịch sử Game Đối tác (<span id="historyCount">0</span>)</span>
+                    <span><i class="fa-solid fa-folder-open"></i> Thư viện Game Đối tác (<span id="historyCount">0</span>)</span>
                     <input type="text" id="historySearch" class="input" style="max-width:210px; padding:6px 10px; font-size:12px;" placeholder="Tìm đối tác hoặc tên bài..." oninput="AdminStudio.renderHistoryList()">
                 </div>
                 <div id="historyList" class="history-list"></div>
             </section>
         </div>
 
-        <!-- CỘT PHẢI: XEM TRƯỚC BÀN CỜ & LINK GỬI HỌC VIÊN -->
+        <!-- CỘT PHẢI: XEM TRƯỚC BÀN CỜ & LINK CHIA SẺ -->
         <div>
             <section class="card">
                 <div class="card-title">
@@ -664,9 +647,9 @@
                     <div class="board-inner" id="boardContainer">
                         <div class="zip-grid" id="zipGrid"></div>
                         <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <!-- Đường đáp án mờ cho giảng viên kiểm tra -->
+                            <!-- Đường đáp án mờ cho đối tác kiểm tra -->
                             <polyline id="adminSolLine" fill="none" stroke="rgba(37, 99, 235, 0.32)" stroke-width="4.5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
-                            <!-- Đường hầm đào đất màu #4D3B9C (duy nhất phần này màu tím) -->
+                            <!-- Đường hầm đào đất màu #4D3B9C -->
                             <g id="zipTunnelOuter" opacity="0.26"></g>
                             <g id="zipTunnelInner" opacity="0.14"></g>
                             <circle id="zipHeadDot" cx="-10" cy="-10" r="3" fill="rgba(77, 59, 156, 0.78)" opacity="0" />
@@ -675,37 +658,16 @@
                     </div>
                 </div>
 
-                <!-- Link gửi học viên & Đồng bộ đa thiết bị -->
+                <!-- Link chia sẻ vào app PopMinutes -->
                 <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:6px;">
                     <label style="display:block; font-size:12.5px; font-weight:800; color:var(--navy); margin-bottom:4px;">
-                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (Mở được trên mọi máy)
+                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (Yêu cầu có tài khoản PopMinutes)
                     </label>
                     <div class="share-url-row">
                         <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
                         <button type="button" class="btn btn-primary" style="flex-shrink:0;" onclick="AdminStudio.copyShareUrl()">
                             <i class="fa-regular fa-copy"></i> Copy Link
                         </button>
-                    </div>
-                    <div style="display:flex; gap:8px; margin-top:10px;">
-                        <button type="button" class="btn btn-sm" style="flex:1;" onclick="AdminStudio.openLearnerPreview()">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở thử giao diện Học viên
-                        </button>
-                    </div>
-
-                    <!-- Cấu hình đồng bộ tự động lên mọi thiết bị qua Google Sheets -->
-                    <div style="margin-top:14px; padding:12px; background:#F8FAFC; border:1px solid var(--border); border-radius:12px;">
-                        <label style="display:block; font-size:12px; font-weight:800; color:var(--navy); margin-bottom:4px;">
-                            <i class="fa-solid fa-cloud-arrow-up" style="color:var(--blue);"></i> Link đồng bộ Cloud (Google Apps Script URL)
-                        </label>
-                        <p style="font-size:11.5px; color:var(--muted); margin-bottom:8px; line-height:1.45;">
-                            Dán URL Google Apps Script để mỗi khi lưu bài, game tự động cập nhật sang <strong>tất cả máy tính & điện thoại khác</strong>.
-                        </p>
-                        <div style="display:flex; gap:6px;">
-                            <input type="url" id="cloudSyncUrlInput" class="input" style="font-size:12px; padding:8px 10px;" placeholder="https://script.google.com/macros/s/.../exec" onchange="AdminStudio.saveCloudUrl(this.value)">
-                            <button type="button" class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="AdminStudio.pushHistoryToCloud()">
-                                <i class="fa-solid fa-rotate"></i> Đẩy lên Cloud
-                            </button>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -716,7 +678,7 @@
     <div id="adminRewardModal" class="reward-modal-backdrop" onclick="if(event.target===this) AdminStudio.closeRewardModal()">
         <div class="reward-modal-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong id="adminRewardModalTitle" style="font-size:15px; color:var(--navy);">Xem trước Popup sau khi giải xong</strong>
+                <strong id="adminRewardModalTitle" style="font-size:15px; color:var(--navy);">Xem trước Popup sau khi hoàn thành</strong>
                 <button type="button" onclick="AdminStudio.closeRewardModal()" style="border:none; background:#F1F5F9; width:30px; height:30px; border-radius:50%; cursor:pointer;">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -729,7 +691,7 @@
                     </div>
                     <div style="min-width:0;">
                         <div id="adminDocName" style="font-size:13px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Tài liệu PDF</div>
-                        <div style="font-size:11.5px; color:var(--muted);">Tài liệu đính kèm cho học viên</div>
+                        <div style="font-size:11.5px; color:var(--muted);">Tài liệu đính kèm trên PopMinutes</div>
                     </div>
                 </div>
                 <a id="adminDocDlBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="text-decoration:none; flex-shrink:0;">
@@ -745,10 +707,16 @@
     <div id="toast" class="toast"></div>
 
     <script>
+        // Link App PopMinutes:
+        // - Giai đoạn test: 'https://hoangtrucnhi.github.io/PopMinutes-Game/'
+        // - Bản chính thức: 'https://pm.pophubly.com/'
+        const POPMINUTES_APP_BASE_URL = 'https://hoangtrucnhi.github.io/PopMinutes-Game/';
+
+        // (Tùy chọn) Dán URL Google Apps Script /exec vào đây nếu muốn đồng bộ tự động thư viện game lên mọi thiết bị
+        const DEFAULT_CLOUD_SYNC_URL = '';
+
         const PARTNER_HISTORY_KEY = 'popminutes_partner_zip_games_v1';
         const LEARNER_STORAGE_KEY = 'popminutes_custom_zip_levels_v1';
-        const CLOUD_URL_STORAGE_KEY = 'popminutes_zip_cloud_url_v1';
-        const DEFAULT_CLOUD_SYNC_URL = 'https://script.google.com/macros/s/AKfycbx2GgGfkpCzgS40yZ2Xrip2NtPwujYx9cwE-t2ci3rpbBLac-uepqbXMEe24pGBASZ0yA/exec';
 
         const SAMPLE_STEPS = [
             { short: 'Tiếp cận', desc: 'Chào hỏi & tạo thiện cảm mở đầu' },
@@ -787,11 +755,8 @@
 
         function buildShareUrlForLevel(level) {
             const encoded = encodeSharedZipLevel(level);
-            const baseUrl = window.location.href
-                .split('#')[0]
-                .split('?')[0]
-                .replace(/zip-admin\.html$/i, 'index.html');
-            return `${baseUrl}?zip_data=${encoded}#game-zip`;
+            const base = POPMINUTES_APP_BASE_URL.replace(/\/+$/, '');
+            return `${base}/?zip_data=${encoded}#game-zip`;
         }
 
         function buildVideoEmbedHtml(rawUrl) {
@@ -825,7 +790,6 @@
             return url;
         }
 
-        // Đường hầm đào đất màu #4D3B9C
         function renderDugTunnelSvg(outerGroup, innerGroup, pathCoords, size) {
             if (!pathCoords || !pathCoords.length) {
                 outerGroup.innerHTML = '';
@@ -885,10 +849,6 @@
             hideNumbers: false,
 
             init() {
-                const savedCloudUrl = localStorage.getItem(CLOUD_URL_STORAGE_KEY) || DEFAULT_CLOUD_SYNC_URL;
-                const cloudInput = document.getElementById('cloudSyncUrlInput');
-                if (cloudInput) cloudInput.value = savedCloudUrl;
-
                 this.loadHistoryFromStorage();
                 this.renderHistoryList();
                 this.startNewGame(true);
@@ -909,37 +869,20 @@
                     localStorage.setItem(PARTNER_HISTORY_KEY, JSON.stringify(this.history));
                     const learnerLevels = this.history.map(item => item.level);
                     localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
+                    if (DEFAULT_CLOUD_SYNC_URL) {
+                        fetch(DEFAULT_CLOUD_SYNC_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            body: JSON.stringify(learnerLevels)
+                        }).catch(() => {});
+                    }
                 } catch (e) {}
-            },
-            saveCloudUrl(url) {
-                localStorage.setItem(CLOUD_URL_STORAGE_KEY, (url || '').trim());
-                showToast('Đã lưu đường dẫn đồng bộ Cloud!');
-            },
-
-            async pushHistoryToCloud() {
-                const url = (document.getElementById('cloudSyncUrlInput').value || '').trim();
-                if (!url) {
-                    showToast('Vui lòng dán URL Google Apps Script trước.');
-                    return;
-                }
-                localStorage.setItem(CLOUD_URL_STORAGE_KEY, url);
-                const learnerLevels = this.history.map(item => item.level);
-                try {
-                    await fetch(url, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        body: JSON.stringify(learnerLevels)
-                    });
-                    showToast('Đã đẩy toàn bộ bài đào tạo lên Cloud cho mọi máy!');
-                } catch (e) {
-                    showToast('Lỗi kết nối Cloud, vui lòng kiểm tra lại URL.');
-                }
             },
 
             startNewGame(silent) {
                 this.editingId = null;
                 document.getElementById('editingStatusBadge').style.display = 'none';
-                document.getElementById('saveBtnLabel').textContent = 'Lưu vào Lịch sử Đối tác';
+                document.getElementById('saveBtnLabel').textContent = 'Lưu vào Thư viện Game';
                 document.getElementById('partnerName').value = 'Đối tác Đào tạo Mẫu';
                 document.getElementById('levelTitle').value = 'Quy trình Chốt Sales B2B';
                 document.getElementById('videoUrl').value = '';
@@ -953,7 +896,7 @@
                 this.renderStepInputs();
                 this.generateBoard();
                 this.renderHistoryList();
-                if (!silent) showToast('Đã sẵn sàng tạo bài đào tạo mới.');
+                if (!silent) showToast('Đã sẵn sàng soạn bài mới.');
             },
 
             saveToPartnerHistory() {
@@ -966,7 +909,7 @@
                 const record = {
                     id: this.editingId || ('zip_' + Date.now()),
                     partnerName: this.currentLevel.partnerName || 'Chưa gắn tên đối tác',
-                    title: (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình',
+                    title: (document.getElementById('levelTitle').value || '').trim() || 'Quy trình thực chiến',
                     videoUrl: this.currentLevel.videoUrl || '',
                     videoTitle: this.currentLevel.videoTitle || '',
                     docUrl: this.currentLevel.docUrl || '',
@@ -985,19 +928,16 @@
                     } else {
                         this.history.unshift(record);
                     }
-                    showToast('Đã cập nhật bài đào tạo của đối tác!');
+                    showToast('Đã cập nhật bài trong thư viện!');
                 } else {
                     this.editingId = record.id;
                     this.history.unshift(record);
                     document.getElementById('editingStatusBadge').style.display = 'inline-block';
                     document.getElementById('saveBtnLabel').textContent = 'Cập nhật thay đổi';
-                    showToast('Đã lưu vào Lịch sử Game Đối tác!');
+                    showToast('Đã lưu vào Thư viện Game Đối tác!');
                 }
 
                 this.persistHistory();
-                if ((document.getElementById('cloudSyncUrlInput').value || '').trim()) {
-                    this.pushHistoryToCloud();
-                }
                 this.renderHistoryList();
             },
 
@@ -1038,7 +978,7 @@
                 document.getElementById('saveBtnLabel').textContent = 'Lưu bản sao mới';
                 document.getElementById('levelTitle').value = record.title + ' (Bản sao)';
                 this.onMetaChange();
-                showToast('Đã nhân bản! Hãy bấm "Lưu bản sao mới" để lưu.');
+                showToast('Đã nhân bản! Bấm "Lưu bản sao mới" để lưu.');
             },
 
             deleteHistoryItem(id) {
@@ -1046,11 +986,11 @@
                 if (this.editingId === id) {
                     this.editingId = null;
                     document.getElementById('editingStatusBadge').style.display = 'none';
-                    document.getElementById('saveBtnLabel').textContent = 'Lưu vào Lịch sử Đối tác';
+                    document.getElementById('saveBtnLabel').textContent = 'Lưu vào Thư viện Game';
                 }
                 this.persistHistory();
                 this.renderHistoryList();
-                showToast('Đã xóa bài khỏi lịch sử.');
+                showToast('Đã xóa khỏi thư viện.');
             },
 
             copyHistoryLink(id) {
@@ -1078,7 +1018,7 @@
                 if (!filtered.length) {
                     listEl.innerHTML = `
                         <div style="text-align:center; padding:24px 12px; color:var(--muted); font-size:13px; border:1px dashed var(--border); border-radius:14px;">
-                            Chưa có bài đào tạo nào được lưu. Hãy thiết lập quy trình phía trên và bấm <strong>Lưu vào Lịch sử Đối tác</strong>.
+                            Chưa có game nào trong thư viện. Hãy thiết lập quy trình phía trên và bấm <strong>Lưu vào Thư viện Game</strong>.
                         </div>
                     `;
                     return;
@@ -1120,7 +1060,7 @@
             syncMetaIntoCurrentLevel() {
                 if (!this.currentLevel) return;
                 const partner = (document.getElementById('partnerName').value || '').trim();
-                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
+                const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Quy trình thực chiến';
                 const videoUrl = (document.getElementById('videoUrl').value || '').trim();
                 const videoTitle = (document.getElementById('videoTitle').value || '').trim();
                 const docUrl = (document.getElementById('docUrl').value || '').trim();
@@ -1452,7 +1392,7 @@
                 this.updateVisuals();
 
                 if (this.path.length === total) {
-                    showToast('Chơi thử thành công! Học viên sẽ nhận popup sau bước này.');
+                    showToast('Chơi thử thành công! Người chơi sẽ nhận popup sau bước này.');
                 }
             },
 
@@ -1513,12 +1453,8 @@
             copyShareUrl() {
                 const input = document.getElementById('shareUrlInput');
                 navigator.clipboard.writeText(input.value).then(() => {
-                    showToast('Đã sao chép link gửi học viên!');
+                    showToast('Đã sao chép link chia sẻ vào PopMinutes!');
                 });
-            },
-
-            openLearnerPreview() {
-                window.open(document.getElementById('shareUrlInput').value, '_blank');
             },
 
             previewRewardModal() {
