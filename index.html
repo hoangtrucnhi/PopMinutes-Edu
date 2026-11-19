@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --brand: #4D3B9C;
-            --brand-dark: #362773;
-            --brand-pale: #F5F3FF;
             --navy: #1B2B7A;
-            --bg: #F4F5F8;
+            --navy-dark: #111C54;
+            --blue: #2563EB;
+            --blue-pale: #EFF6FF;
+            --bg: #F4F6FA;
             --white: #FFFFFF;
             --text: #0F172A;
             --muted: #64748B;
@@ -30,13 +30,13 @@
             padding-bottom: 48px;
         }
         .topbar {
-            background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
             color: #FFFFFF;
             padding: 15px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 16px rgba(54, 39, 115, 0.18);
+            box-shadow: 0 4px 16px rgba(17, 28, 84, 0.18);
         }
         .brand {
             display: flex;
@@ -47,7 +47,7 @@
             width: 38px;
             height: 38px;
             border-radius: 11px;
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,7 +61,7 @@
             gap: 7px;
             padding: 9px 14px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.15);
             color: #FFFFFF;
             text-decoration: none;
             font-size: 13px;
@@ -94,7 +94,7 @@
         .card-title {
             font-size: 15.5px;
             font-weight: 800;
-            color: var(--brand);
+            color: var(--navy);
             margin-bottom: 14px;
             display: flex;
             align-items: center;
@@ -130,7 +130,7 @@
             outline: none;
             transition: border-color 0.15s ease;
         }
-        .input:focus, .select:focus { border-color: var(--brand); }
+        .input:focus, .select:focus { border-color: var(--blue); }
 
         .grid-2 {
             display: grid;
@@ -162,7 +162,7 @@
             width: 24px;
             height: 24px;
             border-radius: 7px;
-            background: var(--brand);
+            background: var(--navy);
             color: #FFFFFF;
             font-size: 11.5px;
             font-weight: 800;
@@ -180,7 +180,7 @@
             background: #FFFFFF;
             outline: none;
         }
-        .step-row input:focus { border-color: var(--brand); }
+        .step-row input:focus { border-color: var(--blue); }
         .step-del {
             border: none;
             background: transparent;
@@ -190,13 +190,18 @@
         }
         .step-del:hover { color: #DC2626; }
 
-        /* Hộp cấu hình Video */
-        .video-attach-box {
-            background: #FAF9FE;
-            border: 1.5px dashed #C4B5FD;
+        /* Hộp cấu hình Video & Tài liệu đính kèm */
+        .attach-box {
+            background: #F8FAFC;
+            border: 1.5px dashed #BFDBFE;
             border-radius: 14px;
             padding: 14px;
             margin-bottom: 14px;
+        }
+        .attach-divider {
+            height: 1px;
+            background: #E2E8F0;
+            margin: 12px 0;
         }
 
         .btn {
@@ -215,14 +220,15 @@
             cursor: pointer;
             transition: all 0.15s ease;
         }
-        .btn:hover { border-color: var(--brand); color: var(--brand); }
+        .btn:hover { border-color: var(--navy); color: var(--navy); }
         .btn-primary {
-            background: var(--brand);
-            border-color: var(--brand);
+            background: var(--navy);
+            border-color: var(--navy);
             color: #FFFFFF;
         }
         .btn-primary:hover {
-            background: var(--brand-dark);
+            background: var(--blue);
+            border-color: var(--blue);
             color: #FFFFFF;
         }
         .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 9px; }
@@ -244,8 +250,8 @@
             transition: border-color 0.15s ease;
         }
         .history-item.active-edit {
-            border-color: var(--brand);
-            background: var(--brand-pale);
+            border-color: var(--blue);
+            background: var(--blue-pale);
         }
         .history-top {
             display: flex;
@@ -260,8 +266,8 @@
             gap: 4px;
             font-size: 11px;
             font-weight: 800;
-            color: var(--brand);
-            background: #F3E8FF;
+            color: #1D4ED8;
+            background: #EFF6FF;
             padding: 2px 8px;
             border-radius: 6px;
             margin-bottom: 4px;
@@ -285,7 +291,7 @@
             gap: 6px;
         }
 
-        /* Bàn cờ Preview đồng bộ 100% giao diện học viên */
+        /* Bàn cờ Preview đồng bộ giao diện học viên (Xanh chủ đạo + Đường hầm #4D3B9C) */
         .preview-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -304,17 +310,17 @@
             cursor: pointer;
         }
         .toggle-pill.active {
-            background: var(--brand);
-            border-color: var(--brand);
+            background: var(--navy);
+            border-color: var(--navy);
             color: #FFFFFF;
         }
         .step-banner {
-            background: var(--brand-pale);
-            border: 1px solid #DDD6FE;
+            background: var(--blue-pale);
+            border: 1px solid #DBEAFE;
             border-radius: 11px;
             padding: 9px 12px;
             font-size: 12.5px;
-            color: #3B2D7A;
+            color: var(--navy);
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
@@ -338,7 +344,7 @@
             height: 100%;
             border-radius: 16px;
             overflow: hidden;
-            background: #FAF9FE;
+            background: #F8FAFC;
             border: 1px solid #E2E8F0;
         }
         .zip-grid {
@@ -348,8 +354,8 @@
         }
         .zip-cell {
             position: relative;
-            border-right: 1px solid rgba(203, 213, 225, 0.45);
-            border-bottom: 1px solid rgba(203, 213, 225, 0.45);
+            border-right: 1px solid rgba(203, 213, 225, 0.5);
+            border-bottom: 1px solid rgba(203, 213, 225, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -395,18 +401,18 @@
             transition: all 0.15s ease;
         }
         .zip-node-step.is-start {
-            background: #F3E8FF;
-            border-color: #4D3B9C;
-            color: #4D3B9C;
+            background: #EFF6FF;
+            border-color: #2563EB;
+            color: var(--navy);
         }
         .zip-node-step.is-end {
             border-style: dashed;
-            border-color: #7C3AED;
+            border-color: #2563EB;
         }
         .zip-cell.visited .zip-node-step {
-            background: #4D3B9C;
+            background: var(--navy);
             border-style: solid;
-            border-color: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.9);
             color: #FFFFFF;
         }
         .zip-step-num {
@@ -420,8 +426,8 @@
             color: #64748B;
         }
         .zip-node-step.is-start .zip-step-num {
-            background: rgba(77, 59, 156, 0.14);
-            color: #4D3B9C;
+            background: rgba(37, 99, 235, 0.14);
+            color: #1D4ED8;
         }
         .zip-cell.visited .zip-step-num {
             background: rgba(255, 255, 255, 0.2);
@@ -434,8 +440,8 @@
             margin-top: 8px;
         }
 
-        /* Popup xem thử Video */
-        .video-modal-backdrop {
+        /* Popup xem thử Video & Tài liệu PDF */
+        .reward-modal-backdrop {
             position: fixed;
             inset: 0;
             background: rgba(15, 23, 42, 0.65);
@@ -446,8 +452,8 @@
             padding: 16px;
             z-index: 9999;
         }
-        .video-modal-backdrop.open { display: flex; }
-        .video-modal-box {
+        .reward-modal-backdrop.open { display: flex; }
+        .reward-modal-box {
             width: 100%;
             max-width: 480px;
             background: #FFFFFF;
@@ -468,6 +474,17 @@
             width: 100%;
             height: 100%;
             border: 0;
+        }
+        .doc-preview-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #F8FAFC;
+            border: 1.5px solid #DBEAFE;
+            border-radius: 13px;
+            padding: 12px 14px;
+            margin: 12px 0;
         }
 
         .toast {
@@ -499,7 +516,7 @@
             <div class="brand-badge"><i class="fa-solid fa-graduation-cap"></i></div>
             <div>
                 <h1>PopMinutes · Studio Quản Lý Đào Tạo</h1>
-                <p>Soạn quy trình, đính kèm video bài học & quản lý thư viện game đối tác</p>
+                <p>Soạn quy trình, đính kèm video / tài liệu PDF & quản lý thư viện game đối tác</p>
             </div>
         </div>
         <a href="index.html#game-zip" target="_blank" class="open-app-link">
@@ -551,24 +568,41 @@
                     </div>
                 </div>
 
-                <!-- ĐÍNH KÈM VIDEO SAU KHI GIẢI XONG -->
-                <div class="video-attach-box">
-                    <div style="font-size:13px; font-weight:800; color:var(--brand); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <span><i class="fa-solid fa-circle-play"></i> Video bài học sau khi giải xong (Hiện Popup)</span>
-                        <button type="button" class="btn btn-sm" onclick="AdminStudio.previewVideoModal()">
+                <!-- ĐÍNH KÈM VIDEO & TÀI LIỆU PDF SAU KHI GIẢI XONG -->
+                <div class="attach-box">
+                    <div style="font-size:13px; font-weight:800; color:var(--navy); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-solid fa-paperclip"></i> Nội dung đính kèm sau khi giải xong (Hiện Popup)</span>
+                        <button type="button" class="btn btn-sm" onclick="AdminStudio.previewRewardModal()">
                             <i class="fa-solid fa-eye"></i> Xem thử Popup
                         </button>
                     </div>
+
                     <div class="grid-2">
                         <div>
-                            <label style="font-size:11.5px;">Link Video (YouTube, Google Drive, Vimeo, MP4)</label>
+                            <label style="font-size:11.5px;"><i class="fa-solid fa-circle-play" style="color:var(--blue);"></i> Link Video (Tùy chọn)</label>
                             <input type="url" id="videoUrl" class="input" placeholder="https://www.youtube.com/watch?v=..." oninput="AdminStudio.onMetaChange()">
                         </div>
                         <div>
-                            <label style="font-size:11.5px;">Tiêu đề video / Lời nhắn cho học viên</label>
-                            <input type="text" id="videoTitle" class="input" placeholder="VD: Video phân tích 6 bước chốt Sales chuẩn" oninput="AdminStudio.onMetaChange()">
+                            <label style="font-size:11.5px;">Tiêu đề Video</label>
+                            <input type="text" id="videoTitle" class="input" placeholder="VD: Video phân tích quy trình chuẩn" oninput="AdminStudio.onMetaChange()">
                         </div>
                     </div>
+
+                    <div class="attach-divider"></div>
+
+                    <div class="grid-2">
+                        <div>
+                            <label style="font-size:11.5px;"><i class="fa-solid fa-file-pdf" style="color:var(--blue);"></i> Link Tài liệu / File PDF (Tùy chọn)</label>
+                            <input type="url" id="docUrl" class="input" placeholder="https://drive.google.com/file/d/... hoặc link .pdf" oninput="AdminStudio.onMetaChange()">
+                        </div>
+                        <div>
+                            <label style="font-size:11.5px;">Tên file tài liệu hiển thị</label>
+                            <input type="text" id="docTitle" class="input" placeholder="VD: Cẩm nang Quy trình Sales B2B.pdf" oninput="AdminStudio.onMetaChange()">
+                        </div>
+                    </div>
+                    <p style="font-size:11.5px; color:var(--muted); margin-top:8px; line-height:1.45;">
+                        * Nếu <strong>chỉ có tài liệu PDF</strong>: Popup sẽ hiện thẳng thẻ tải tài liệu. Nếu <strong>có cả Video & PDF</strong>: Tài liệu sẽ đính kèm ngay bên dưới Video.
+                    </p>
                 </div>
 
                 <div class="field">
@@ -631,11 +665,11 @@
                         <div class="zip-grid" id="zipGrid"></div>
                         <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
                             <!-- Đường đáp án mờ cho giảng viên kiểm tra -->
-                            <polyline id="adminSolLine" fill="none" stroke="rgba(245, 158, 11, 0.35)" stroke-width="4.5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
-                            <!-- Đường hầm màu #4D3B9C lõm ra vào -->
+                            <polyline id="adminSolLine" fill="none" stroke="rgba(37, 99, 235, 0.32)" stroke-width="4.5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
+                            <!-- Đường hầm đào đất màu #4D3B9C (duy nhất phần này màu tím) -->
                             <g id="zipTunnelOuter" opacity="0.26"></g>
                             <g id="zipTunnelInner" opacity="0.14"></g>
-                            <circle id="zipHeadDot" cx="-10" cy="-10" r="3" fill="rgba(77, 59, 156, 0.75)" opacity="0" />
+                            <circle id="zipHeadDot" cx="-10" cy="-10" r="3" fill="rgba(77, 59, 156, 0.78)" opacity="0" />
                         </svg>
                         <svg class="zip-walls-overlay" id="zipWallsOverlay" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
                     </div>
@@ -643,8 +677,8 @@
 
                 <!-- Link gửi học viên -->
                 <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:6px;">
-                    <label style="display:block; font-size:12.5px; font-weight:800; color:var(--brand); margin-bottom:4px;">
-                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (kèm bài chơi & popup video)
+                    <label style="display:block; font-size:12.5px; font-weight:800; color:var(--navy); margin-bottom:4px;">
+                        <i class="fa-solid fa-link"></i> Đường link gửi Học viên (kèm bài chơi & popup tài liệu/video)
                     </label>
                     <div class="share-url-row">
                         <input type="text" id="shareUrlInput" class="input" readonly style="font-size:12px; background:#F8FAFC;">
@@ -662,18 +696,32 @@
         </div>
     </main>
 
-    <!-- POPUP XEM THỬ VIDEO -->
-    <div id="adminVideoModal" class="video-modal-backdrop" onclick="if(event.target===this) AdminStudio.closeVideoModal()">
-        <div class="video-modal-box">
+    <!-- POPUP XEM THỬ VIDEO & TÀI LIỆU PDF -->
+    <div id="adminRewardModal" class="reward-modal-backdrop" onclick="if(event.target===this) AdminStudio.closeRewardModal()">
+        <div class="reward-modal-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong id="adminVideoModalTitle" style="font-size:15px; color:var(--brand);">Xem trước Popup Video</strong>
-                <button type="button" onclick="AdminStudio.closeVideoModal()" style="border:none; background:#F1F5F9; width:30px; height:30px; border-radius:50%; cursor:pointer;">
+                <strong id="adminRewardModalTitle" style="font-size:15px; color:var(--navy);">Xem trước Popup sau khi giải xong</strong>
+                <button type="button" onclick="AdminStudio.closeRewardModal()" style="border:none; background:#F1F5F9; width:30px; height:30px; border-radius:50%; cursor:pointer;">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div id="adminVideoFrame" class="video-frame-wrap"></div>
-            <div style="text-align:right;">
-                <button type="button" class="btn btn-primary btn-sm" onclick="AdminStudio.closeVideoModal()">Đóng</button>
+            <div id="adminVideoFrame" class="video-frame-wrap" style="display:none;"></div>
+            <div id="adminDocCard" class="doc-preview-card" style="display:none;">
+                <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:38px; height:38px; border-radius:10px; background:#EFF6FF; color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div style="min-width:0;">
+                        <div id="adminDocName" style="font-size:13px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Tài liệu PDF</div>
+                        <div style="font-size:11.5px; color:var(--muted);">Tài liệu đính kèm cho học viên</div>
+                    </div>
+                </div>
+                <a id="adminDocDlBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="text-decoration:none; flex-shrink:0;">
+                    <i class="fa-solid fa-download"></i> Tải về
+                </a>
+            </div>
+            <div style="text-align:right; margin-top:10px;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="AdminStudio.closeRewardModal()">Đóng</button>
             </div>
         </div>
     </div>
@@ -706,6 +754,8 @@
                 pn: level.partnerName || '',
                 v: level.videoUrl || '',
                 vt: level.videoTitle || '',
+                d: level.docUrl || '',
+                dt: level.docTitle || '',
                 s: level.size,
                 c: level.checkpoints.map(cp => [cp.r, cp.c, cp.num, cp.shortLabel, cp.label]),
                 w: level.walls,
@@ -747,6 +797,17 @@
             return `<iframe src="${url.replace(/"/g, '&quot;')}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
         }
 
+        function getDocumentDownloadUrl(rawUrl) {
+            const url = (rawUrl || '').trim();
+            if (!url) return '#';
+            const gdMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (gdMatch && gdMatch[1]) {
+                return `https://drive.google.com/uc?export=download&id=${gdMatch[1]}`;
+            }
+            return url;
+        }
+
+        // Đường hầm đào đất màu #4D3B9C
         function renderDugTunnelSvg(outerGroup, innerGroup, pathCoords, size) {
             if (!pathCoords || !pathCoords.length) {
                 outerGroup.innerHTML = '';
@@ -824,7 +885,6 @@
             persistHistory() {
                 try {
                     localStorage.setItem(PARTNER_HISTORY_KEY, JSON.stringify(this.history));
-                    // Đồng bộ danh sách sang App học viên trên cùng trình duyệt
                     const learnerLevels = this.history.map(item => item.level);
                     localStorage.setItem(LEARNER_STORAGE_KEY, JSON.stringify(learnerLevels));
                 } catch (e) {}
@@ -838,6 +898,8 @@
                 document.getElementById('levelTitle').value = 'Quy trình Chốt Sales B2B';
                 document.getElementById('videoUrl').value = '';
                 document.getElementById('videoTitle').value = '';
+                document.getElementById('docUrl').value = '';
+                document.getElementById('docTitle').value = '';
                 document.getElementById('gridSize').value = '5';
                 document.getElementById('wallDiff').value = 'medium';
 
@@ -861,6 +923,8 @@
                     title: (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình',
                     videoUrl: this.currentLevel.videoUrl || '',
                     videoTitle: this.currentLevel.videoTitle || '',
+                    docUrl: this.currentLevel.docUrl || '',
+                    docTitle: this.currentLevel.docTitle || '',
                     size: this.currentLevel.size,
                     diff: document.getElementById('wallDiff').value || 'medium',
                     steps: this.steps.map(s => ({ ...s })),
@@ -900,6 +964,8 @@
                 document.getElementById('levelTitle').value = record.title || '';
                 document.getElementById('videoUrl').value = record.videoUrl || '';
                 document.getElementById('videoTitle').value = record.videoTitle || '';
+                document.getElementById('docUrl').value = record.docUrl || '';
+                document.getElementById('docTitle').value = record.docTitle || '';
                 document.getElementById('gridSize').value = String(record.size || 5);
                 document.getElementById('wallDiff').value = record.diff || 'medium';
 
@@ -980,7 +1046,8 @@
                         </div>
                         <div class="history-meta">
                             <span><i class="fa-solid fa-list-ol"></i> ${item.steps.length} bước</span>
-                            ${item.videoUrl ? `<span style="color:#4D3B9C; font-weight:700;"><i class="fa-solid fa-circle-play"></i> Có video bài học</span>` : `<span>Không đính kèm video</span>`}
+                            ${item.videoUrl ? `<span style="color:var(--blue); font-weight:700;"><i class="fa-solid fa-circle-play"></i> Có video</span>` : ''}
+                            ${item.docUrl ? `<span style="color:var(--navy); font-weight:700;"><i class="fa-solid fa-file-pdf"></i> Có tài liệu PDF</span>` : ''}
                             <span><i class="fa-regular fa-clock"></i> ${item.updatedAt}</span>
                         </div>
                         <div class="history-actions">
@@ -1007,11 +1074,15 @@
                 const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Bài đào tạo quy trình';
                 const videoUrl = (document.getElementById('videoUrl').value || '').trim();
                 const videoTitle = (document.getElementById('videoTitle').value || '').trim();
+                const docUrl = (document.getElementById('docUrl').value || '').trim();
+                const docTitle = (document.getElementById('docTitle').value || '').trim();
 
                 this.currentLevel.partnerName = partner;
                 this.currentLevel.name = partner ? `${partner} · ${titleRaw}` : `${titleRaw} (${this.currentLevel.size}×${this.currentLevel.size})`;
                 this.currentLevel.videoUrl = videoUrl;
                 this.currentLevel.videoTitle = videoTitle || titleRaw;
+                this.currentLevel.docUrl = docUrl;
+                this.currentLevel.docTitle = docTitle || `${titleRaw} (Tài liệu PDF)`;
             },
 
             onMetaChange() {
@@ -1173,6 +1244,8 @@
                     partnerName: '',
                     videoUrl: '',
                     videoTitle: '',
+                    docUrl: '',
+                    docTitle: '',
                     size,
                     isCustom: true,
                     checkpoints,
@@ -1330,7 +1403,7 @@
                 this.updateVisuals();
 
                 if (this.path.length === total) {
-                    showToast('Chơi thử thành công! Nếu có video, popup sẽ bật cho học viên.');
+                    showToast('Chơi thử thành công! Học viên sẽ nhận popup sau bước này.');
                 }
             },
 
@@ -1399,20 +1472,41 @@
                 window.open(document.getElementById('shareUrlInput').value, '_blank');
             },
 
-            previewVideoModal() {
-                const url = (document.getElementById('videoUrl').value || '').trim();
-                if (!url) {
-                    showToast('Bạn chưa nhập Link Video ở ô phía trên.');
+            previewRewardModal() {
+                const vUrl = (document.getElementById('videoUrl').value || '').trim();
+                const dUrl = (document.getElementById('docUrl').value || '').trim();
+                if (!vUrl && !dUrl) {
+                    showToast('Bạn chưa nhập Link Video hoặc Link Tài liệu PDF ở phía trên.');
                     return;
                 }
-                const title = (document.getElementById('videoTitle').value || '').trim() || document.getElementById('levelTitle').value;
-                document.getElementById('adminVideoModalTitle').textContent = title;
-                document.getElementById('adminVideoFrame').innerHTML = buildVideoEmbedHtml(url);
-                document.getElementById('adminVideoModal').classList.add('open');
+
+                const titleEl = document.getElementById('adminRewardModalTitle');
+                const videoFrame = document.getElementById('adminVideoFrame');
+                const docCard = document.getElementById('adminDocCard');
+
+                if (vUrl) {
+                    titleEl.textContent = (document.getElementById('videoTitle').value || '').trim() || document.getElementById('levelTitle').value;
+                    videoFrame.innerHTML = buildVideoEmbedHtml(vUrl);
+                    videoFrame.style.display = 'block';
+                } else {
+                    titleEl.textContent = (document.getElementById('docTitle').value || '').trim() || document.getElementById('levelTitle').value;
+                    videoFrame.innerHTML = '';
+                    videoFrame.style.display = 'none';
+                }
+
+                if (dUrl) {
+                    document.getElementById('adminDocName').textContent = (document.getElementById('docTitle').value || '').trim() || 'Tài liệu hướng dẫn quy trình (PDF)';
+                    document.getElementById('adminDocDlBtn').href = getDocumentDownloadUrl(dUrl);
+                    docCard.style.display = 'flex';
+                } else {
+                    docCard.style.display = 'none';
+                }
+
+                document.getElementById('adminRewardModal').classList.add('open');
             },
 
-            closeVideoModal() {
-                document.getElementById('adminVideoModal').classList.remove('open');
+            closeRewardModal() {
+                document.getElementById('adminRewardModal').classList.remove('open');
                 document.getElementById('adminVideoFrame').innerHTML = '';
             }
         };
