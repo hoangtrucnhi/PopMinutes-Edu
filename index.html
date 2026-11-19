@@ -127,6 +127,20 @@
             .grid-2 { grid-template-columns: 1fr; }
         }
 
+        .level-spec-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 11px;
+            background: var(--blue-pale);
+            border: 1px solid #BFDBFE;
+            color: var(--navy);
+            font-size: 12.5px;
+            font-weight: 700;
+            height: 41px;
+        }
+
         /* Danh sách từng bước quy trình */
         .steps-list {
             display: flex;
@@ -246,6 +260,23 @@
             gap: 8px;
             margin-bottom: 6px;
         }
+        .history-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 4px;
+        }
+        .history-level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #FFFFFF;
+            background: var(--navy);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
         .history-partner {
             display: inline-flex;
             align-items: center;
@@ -256,7 +287,6 @@
             background: #EFF6FF;
             padding: 2px 8px;
             border-radius: 6px;
-            margin-bottom: 4px;
         }
         .history-title {
             font-size: 14px;
@@ -277,7 +307,7 @@
             gap: 6px;
         }
 
-        /* Bàn cờ Preview (Xanh chủ đạo + Đường hầm #4D3B9C) */
+        /* Bàn cờ Preview */
         .preview-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -523,8 +553,8 @@
 
                 <div class="grid-2 field">
                     <div>
-                        <label>Tên Đối tác / Đơn vị đào tạo</label>
-                        <input type="text" id="partnerName" class="input" placeholder="VD: Học viện Sales ABC" value="Đối tác Đào tạo Mẫu" oninput="AdminStudio.onMetaChange()">
+                        <label>Tên Chuyên gia / Đơn vị đào tạo</label>
+                        <input type="text" id="partnerName" class="input" placeholder="VD: Peter Võ" value="Đối tác Đào tạo Mẫu" oninput="AdminStudio.onMetaChange()">
                     </div>
                     <div>
                         <label>Tên bài / Quy trình thực chiến</label>
@@ -534,20 +564,15 @@
 
                 <div class="grid-2 field">
                     <div>
-                        <label>Kích thước bàn cờ</label>
-                        <select id="gridSize" class="select" onchange="AdminStudio.generateBoard()">
-                            <option value="5" selected>5×5 (25 ô · Tiêu chuẩn)</option>
-                            <option value="6">6×6 (36 ô · Chuyên sâu)</option>
-                            <option value="7">7×7 (49 ô · Nâng cao)</option>
-                        </select>
+                        <label>Cấp độ Level của Chuyên gia (1 – 25)</label>
+                        <select id="levelSlot" class="select" onchange="AdminStudio.onLevelSlotChange()"></select>
                     </div>
                     <div>
-                        <label>Độ khó vách ngăn</label>
-                        <select id="wallDiff" class="select" onchange="AdminStudio.generateBoard()">
-                            <option value="easy">Dễ (Ít vách ngăn)</option>
-                            <option value="medium" selected>Vừa (Tiêu chuẩn)</option>
-                            <option value="hard">Khó (Nhiều vách ngăn)</option>
-                        </select>
+                        <label>Độ khó tự động theo Level</label>
+                        <div id="autoLevelSpecBadge" class="level-spec-pill">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Bàn 5×5 · Khởi động</span>
+                        </div>
                     </div>
                 </div>
 
@@ -612,7 +637,7 @@
             <section class="card">
                 <div class="card-title">
                     <span><i class="fa-solid fa-folder-open"></i> Thư viện Game Đối tác (<span id="historyCount">0</span>)</span>
-                    <input type="text" id="historySearch" class="input" style="max-width:210px; padding:6px 10px; font-size:12px;" placeholder="Tìm đối tác hoặc tên bài..." oninput="AdminStudio.renderHistoryList()">
+                    <input type="text" id="historySearch" class="input" style="max-width:210px; padding:6px 10px; font-size:12px;" placeholder="Tìm chuyên gia hoặc tên bài..." oninput="AdminStudio.renderHistoryList()">
                 </div>
                 <div id="historyList" class="history-list"></div>
             </section>
@@ -647,7 +672,7 @@
                     <div class="board-inner" id="boardContainer">
                         <div class="zip-grid" id="zipGrid"></div>
                         <svg class="zip-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <!-- Đường đáp án mờ cho đối tác kiểm tra -->
+                            <!-- Đường đáp án mờ cho chuyên gia kiểm tra -->
                             <polyline id="adminSolLine" fill="none" stroke="rgba(37, 99, 235, 0.32)" stroke-width="4.5" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" points="" />
                             <!-- Đường hầm đào đất màu #4D3B9C -->
                             <g id="zipTunnelOuter" opacity="0.26"></g>
@@ -691,7 +716,7 @@
                     </div>
                     <div style="min-width:0;">
                         <div id="adminDocName" style="font-size:13px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Tài liệu PDF</div>
-                        <div style="font-size:11.5px; color:var(--muted);">Tài liệu đính kèm trên PopMinutes</div>
+                        <div style="font-size:11.5px; color:var(--muted);">Tài liệu từ chuyên gia trên PopMinutes</div>
                     </div>
                 </div>
                 <a id="adminDocDlBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="text-decoration:none; flex-shrink:0;">
@@ -712,7 +737,7 @@
         // - Bản chính thức: 'https://pm.pophubly.com/'
         const POPMINUTES_APP_BASE_URL = 'https://hoangtrucnhi.github.io/PopMinutes-Game/';
 
-        // (Tùy chọn) Dán URL Google Apps Script /exec vào đây nếu muốn đồng bộ tự động thư viện game lên mọi thiết bị
+        // Dán URL Google Apps Script /exec vào đây để tự động đẩy bài lên mọi thiết bị
         const DEFAULT_CLOUD_SYNC_URL = '';
 
         const PARTNER_HISTORY_KEY = 'popminutes_partner_zip_games_v1';
@@ -727,6 +752,37 @@
             { short: 'Chốt hẹn', desc: 'Thống nhất lịch demo hoặc ký hợp đồng' }
         ];
 
+        // Tự động xác định kích thước bàn cờ & số lượng vách ngăn chuẩn theo Level (1 - 25)
+        function getAutoConfigForLevel(levelNum) {
+            const lv = Math.max(1, Math.min(25, Number(levelNum) || 1));
+            if (lv <= 5) {
+                return { size: 5, wallTarget: lv <= 2 ? 2 : 3, tierLabel: 'Bàn 5×5 · Khởi động' };
+            }
+            if (lv <= 8) {
+                return { size: 5, wallTarget: 5, tierLabel: 'Bàn 5×5 · Thực chiến' };
+            }
+            if (lv <= 12) {
+                return { size: 6, wallTarget: 6, tierLabel: 'Bàn 6×6 · Trung cấp' };
+            }
+            if (lv <= 20) {
+                return { size: 6, wallTarget: 9, tierLabel: 'Bàn 6×6 · Chuyên sâu' };
+            }
+            return { size: 7, wallTarget: 12, tierLabel: 'Bàn 7×7 · Bậc thầy' };
+        }
+
+        function slugifyPartner(str) {
+            return (str || 'partner')
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '') || 'partner';
+        }
+
+        function buildStableLevelId(partnerName, levelNum) {
+            return `lv_${Number(levelNum) || 1}_${slugifyPartner(partnerName)}`;
+        }
+
         function showToast(msg) {
             const el = document.getElementById('toast');
             el.textContent = msg;
@@ -736,7 +792,10 @@
 
         function encodeSharedZipLevel(level) {
             const compact = {
+                id: level.id || buildStableLevelId(level.partnerName, level.levelNum),
+                lv: Number(level.levelNum) || 1,
                 t: level.name,
+                rt: level.rawTitle || level.name,
                 pn: level.partnerName || '',
                 v: level.videoUrl || '',
                 vt: level.videoTitle || '',
@@ -849,10 +908,36 @@
             hideNumbers: false,
 
             init() {
+                this.populateLevelSlotDropdown();
                 this.loadHistoryFromStorage();
                 this.renderHistoryList();
                 this.startNewGame(true);
                 this.bindPointerEvents();
+            },
+
+            populateLevelSlotDropdown() {
+                const sel = document.getElementById('levelSlot');
+                if (!sel) return;
+                let opts = '';
+                for (let i = 1; i <= 25; i++) {
+                    const cfg = getAutoConfigForLevel(i);
+                    opts += `<option value="${i}">Level ${i} (${cfg.tierLabel})</option>`;
+                }
+                sel.innerHTML = opts;
+            },
+
+            updateLevelSpecBadge() {
+                const lv = Number(document.getElementById('levelSlot').value) || 1;
+                const cfg = getAutoConfigForLevel(lv);
+                const badge = document.getElementById('autoLevelSpecBadge');
+                if (badge) {
+                    badge.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span>${cfg.tierLabel} · ${cfg.wallTarget} vách ngăn</span>`;
+                }
+            },
+
+            onLevelSlotChange() {
+                this.updateLevelSpecBadge();
+                this.generateBoard();
             },
 
             loadHistoryFromStorage() {
@@ -885,13 +970,13 @@
                 document.getElementById('saveBtnLabel').textContent = 'Lưu vào Thư viện Game';
                 document.getElementById('partnerName').value = 'Đối tác Đào tạo Mẫu';
                 document.getElementById('levelTitle').value = 'Quy trình Chốt Sales B2B';
+                document.getElementById('levelSlot').value = '1';
                 document.getElementById('videoUrl').value = '';
                 document.getElementById('videoTitle').value = '';
                 document.getElementById('docUrl').value = '';
                 document.getElementById('docTitle').value = '';
-                document.getElementById('gridSize').value = '5';
-                document.getElementById('wallDiff').value = 'medium';
 
+                this.updateLevelSpecBadge();
                 this.steps = SAMPLE_STEPS.map(s => ({ ...s }));
                 this.renderStepInputs();
                 this.generateBoard();
@@ -905,36 +990,34 @@
 
                 const now = new Date();
                 const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} · ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+                const levelNum = Number(document.getElementById('levelSlot').value) || 1;
+                const stableId = buildStableLevelId(this.currentLevel.partnerName, levelNum);
 
                 const record = {
-                    id: this.editingId || ('zip_' + Date.now()),
-                    partnerName: this.currentLevel.partnerName || 'Chưa gắn tên đối tác',
+                    id: this.editingId || stableId,
+                    levelNum,
+                    partnerName: this.currentLevel.partnerName || 'Chưa gắn tên chuyên gia',
                     title: (document.getElementById('levelTitle').value || '').trim() || 'Quy trình thực chiến',
                     videoUrl: this.currentLevel.videoUrl || '',
                     videoTitle: this.currentLevel.videoTitle || '',
                     docUrl: this.currentLevel.docUrl || '',
                     docTitle: this.currentLevel.docTitle || '',
                     size: this.currentLevel.size,
-                    diff: document.getElementById('wallDiff').value || 'medium',
                     steps: this.steps.map(s => ({ ...s })),
                     level: JSON.parse(JSON.stringify(this.currentLevel)),
                     updatedAt: timeStr
                 };
 
-                if (this.editingId) {
-                    const idx = this.history.findIndex(h => h.id === this.editingId);
-                    if (idx !== -1) {
-                        this.history[idx] = record;
-                    } else {
-                        this.history.unshift(record);
-                    }
-                    showToast('Đã cập nhật bài trong thư viện!');
+                const existingIdx = this.history.findIndex(h => h.id === record.id);
+                if (existingIdx !== -1) {
+                    this.history[existingIdx] = record;
+                    showToast(`Đã cập nhật Level ${levelNum} trong thư viện!`);
                 } else {
                     this.editingId = record.id;
                     this.history.unshift(record);
                     document.getElementById('editingStatusBadge').style.display = 'inline-block';
                     document.getElementById('saveBtnLabel').textContent = 'Cập nhật thay đổi';
-                    showToast('Đã lưu vào Thư viện Game Đối tác!');
+                    showToast(`Đã lưu Level ${levelNum} vào Thư viện Game!`);
                 }
 
                 this.persistHistory();
@@ -951,13 +1034,13 @@
 
                 document.getElementById('partnerName').value = record.partnerName || '';
                 document.getElementById('levelTitle').value = record.title || '';
+                document.getElementById('levelSlot').value = String(record.levelNum || 1);
                 document.getElementById('videoUrl').value = record.videoUrl || '';
                 document.getElementById('videoTitle').value = record.videoTitle || '';
                 document.getElementById('docUrl').value = record.docUrl || '';
                 document.getElementById('docTitle').value = record.docTitle || '';
-                document.getElementById('gridSize').value = String(record.size || 5);
-                document.getElementById('wallDiff').value = record.diff || 'medium';
 
+                this.updateLevelSpecBadge();
                 this.steps = (record.steps || []).map(s => ({ ...s }));
                 this.currentLevel = JSON.parse(JSON.stringify(record.level));
 
@@ -966,7 +1049,7 @@
                 this.updateShareLink();
                 this.renderHistoryList();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                showToast(`Đang chỉnh sửa: ${record.title}`);
+                showToast(`Đang chỉnh sửa Level ${record.levelNum || 1}: ${record.title}`);
             },
 
             duplicateHistoryItem(id) {
@@ -975,10 +1058,12 @@
                 this.editHistoryItem(id);
                 this.editingId = null;
                 document.getElementById('editingStatusBadge').style.display = 'none';
-                document.getElementById('saveBtnLabel').textContent = 'Lưu bản sao mới';
-                document.getElementById('levelTitle').value = record.title + ' (Bản sao)';
-                this.onMetaChange();
-                showToast('Đã nhân bản! Bấm "Lưu bản sao mới" để lưu.');
+                document.getElementById('saveBtnLabel').textContent = 'Lưu sang Level mới';
+                const nextSlot = Math.min(25, (Number(record.levelNum) || 1) + 1);
+                document.getElementById('levelSlot').value = String(nextSlot);
+                this.updateLevelSpecBadge();
+                this.generateBoard();
+                showToast(`Đã nhân bản sang Level ${nextSlot}! Bấm "Lưu sang Level mới" để lưu.`);
             },
 
             deleteHistoryItem(id) {
@@ -998,7 +1083,7 @@
                 if (!record) return;
                 const url = buildShareUrlForLevel(record.level);
                 navigator.clipboard.writeText(url).then(() => {
-                    showToast(`Đã sao chép link bài "${record.title}"!`);
+                    showToast(`Đã sao chép link Level ${record.levelNum || 1} "${record.title}"!`);
                 });
             },
 
@@ -1007,11 +1092,14 @@
                 const countEl = document.getElementById('historyCount');
                 const keyword = (document.getElementById('historySearch').value || '').trim().toLowerCase();
 
-                const filtered = this.history.filter(item =>
-                    !keyword ||
-                    (item.partnerName || '').toLowerCase().includes(keyword) ||
-                    (item.title || '').toLowerCase().includes(keyword)
-                );
+                const filtered = this.history
+                    .filter(item =>
+                        !keyword ||
+                        (item.partnerName || '').toLowerCase().includes(keyword) ||
+                        (item.title || '').toLowerCase().includes(keyword) ||
+                        `level ${item.levelNum || 1}`.includes(keyword)
+                    )
+                    .sort((a, b) => (a.levelNum || 1) - (b.levelNum || 1));
 
                 countEl.textContent = String(this.history.length);
 
@@ -1028,7 +1116,10 @@
                     <div class="history-item ${this.editingId === item.id ? 'active-edit' : ''}">
                         <div class="history-top">
                             <div>
-                                <div class="history-partner"><i class="fa-solid fa-building"></i> ${item.partnerName}</div>
+                                <div class="history-badges">
+                                    <span class="history-level-badge">Level ${item.levelNum || 1}</span>
+                                    <span class="history-partner"><i class="fa-solid fa-user-tie"></i> ${item.partnerName}</span>
+                                </div>
                                 <div class="history-title">${item.title}</div>
                             </div>
                             <span style="font-size:11px; font-weight:700; color:var(--muted);">${item.size}×${item.size}</span>
@@ -1059,15 +1150,19 @@
 
             syncMetaIntoCurrentLevel() {
                 if (!this.currentLevel) return;
-                const partner = (document.getElementById('partnerName').value || '').trim();
+                const partner = (document.getElementById('partnerName').value || '').trim() || 'Chuyên gia';
                 const titleRaw = (document.getElementById('levelTitle').value || '').trim() || 'Quy trình thực chiến';
+                const levelNum = Number(document.getElementById('levelSlot').value) || 1;
                 const videoUrl = (document.getElementById('videoUrl').value || '').trim();
                 const videoTitle = (document.getElementById('videoTitle').value || '').trim();
                 const docUrl = (document.getElementById('docUrl').value || '').trim();
                 const docTitle = (document.getElementById('docTitle').value || '').trim();
 
+                this.currentLevel.id = buildStableLevelId(partner, levelNum);
+                this.currentLevel.levelNum = levelNum;
                 this.currentLevel.partnerName = partner;
-                this.currentLevel.name = partner ? `${partner} · ${titleRaw}` : `${titleRaw} (${this.currentLevel.size}×${this.currentLevel.size})`;
+                this.currentLevel.rawTitle = titleRaw;
+                this.currentLevel.name = `${partner} · ${titleRaw}`;
                 this.currentLevel.videoUrl = videoUrl;
                 this.currentLevel.videoTitle = videoTitle || titleRaw;
                 this.currentLevel.docUrl = docUrl;
@@ -1180,9 +1275,11 @@
                 return fallback;
             },
 
+            // Sinh bố cục ngẫu nhiên mới nhưng luôn giữ đúng kích thước & số lượng vách ngăn chuẩn của Level đang chọn
             generateBoard() {
-                const size = Number(document.getElementById('gridSize').value) || 5;
-                const diff = document.getElementById('wallDiff').value || 'medium';
+                const levelNum = Number(document.getElementById('levelSlot').value) || 1;
+                const autoCfg = getAutoConfigForLevel(levelNum);
+                const size = autoCfg.size;
                 const totalCells = size * size;
                 const solution = this.generateHamiltonianPath(size);
 
@@ -1225,11 +1322,13 @@
                     }
                 }
                 candidateWalls.sort(() => Math.random() - 0.5);
-                const wallTarget = diff === 'easy' ? 3 : (diff === 'hard' ? size * 2 : Math.round(size * 1.3));
-                const walls = candidateWalls.slice(0, wallTarget);
+                const walls = candidateWalls.slice(0, autoCfg.wallTarget);
 
                 this.currentLevel = {
+                    id: '',
+                    levelNum,
                     name: '',
+                    rawTitle: '',
                     partnerName: '',
                     videoUrl: '',
                     videoTitle: '',
