@@ -991,10 +991,11 @@
                 const now = new Date();
                 const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} · ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
                 const levelNum = Number(document.getElementById('levelSlot').value) || 1;
-                const stableId = buildStableLevelId(this.currentLevel.partnerName, levelNum);
+                const recordId = this.editingId || ('zip_' + Date.now());
+                this.currentLevel.id = recordId;
 
                 const record = {
-                    id: this.editingId || stableId,
+                    id: recordId,
                     levelNum,
                     partnerName: this.currentLevel.partnerName || 'Chưa gắn tên chuyên gia',
                     title: (document.getElementById('levelTitle').value || '').trim() || 'Quy trình thực chiến',
@@ -1158,17 +1159,18 @@
                 const docUrl = (document.getElementById('docUrl').value || '').trim();
                 const docTitle = (document.getElementById('docTitle').value || '').trim();
 
-                this.currentLevel.id = buildStableLevelId(partner, levelNum);
+                if (!this.currentLevel.id) {
+                    this.currentLevel.id = this.editingId || `zip_${Date.now()}`;
+                }
                 this.currentLevel.levelNum = levelNum;
                 this.currentLevel.partnerName = partner;
                 this.currentLevel.rawTitle = titleRaw;
-                this.currentLevel.name = `${partner} · ${titleRaw}`;
+                this.currentLevel.name = `${titleRaw} · ${partner}`;
                 this.currentLevel.videoUrl = videoUrl;
                 this.currentLevel.videoTitle = videoTitle || titleRaw;
                 this.currentLevel.docUrl = docUrl;
                 this.currentLevel.docTitle = docTitle || `${titleRaw} (Tài liệu PDF)`;
             },
-
             onMetaChange() {
                 this.syncMetaIntoCurrentLevel();
                 this.updateShareLink();
